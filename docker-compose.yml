@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build: .
+    container_name: mars-nextjs
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+
+  db:
+    image: postgres:16
+    container_name: mars-db
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: mars_user
+      POSTGRES_PASSWORD: mars_password
+      POSTGRES_DB: mars_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
