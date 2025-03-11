@@ -36,6 +36,24 @@ vi src/migrations/CreateUsersAndProfiles.ts
 yarn ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run -d src/config/ormconfig.ts
 ```
 
+When trying to enter the container the user was not found, bc there was an old volume used, so docker-compose down -v was the solution, and then docker-compose up -d
+
+To use buildkit:
+
+```bash
+# Enable BuildKit
+export DOCKER_BUILDKIT=1
+
+# Create and use a new builder instance
+docker buildx create --use
+
+# Build the images using docker-compose with BuildKit enabled
+docker-compose build
+
+# Run Docker Compose
+docker-compose up
+```
+
 # Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
