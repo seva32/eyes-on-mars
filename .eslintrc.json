@@ -16,5 +16,14 @@
         "newlines-between": "always"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.yml", "*.yaml"],
+      "rules": {
+        "double-quotes": "off",
+        "prettier/prettier": "off"
+      }
+    }
+  ]
 }
