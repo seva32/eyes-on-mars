@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16
-    container_name: '${POSTGRES_HOST}'
+    container_name: '${POSTGRES_HOST_PROD}'
     restart: always
     env_file:
       - .env
@@ -19,8 +19,10 @@ services:
       - mars_network
 
   nextjs:
-    build: .
-    container_name: mars_project_nextjs
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: mars_project_nextjs_prod
     restart: always
     ports:
       - '3003:3003'
@@ -29,7 +31,7 @@ services:
     env_file:
       - .env
     networks:
-      - mars_network
+      - mars_network_prod
     volumes:
       - .:/app
       - /app/node_modules # Avoid overwriting node_modules

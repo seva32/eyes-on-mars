@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3003",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run -d src/config/ormconfig.ts"
   },
   "dependencies": {
     "next": "15.2.1",
