@@ -83,3 +83,5 @@ docker-compose run nextjs yarn run migrate
 ```
 
 If something fails for TypeORM, check the ports in .env and ormconfig.ts
+
+For migrations just cmd to create and docker exec to run

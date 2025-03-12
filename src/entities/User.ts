@@ -6,8 +6,10 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm'
 import { Profile } from './Profile'
+import { FavoritePhoto } from './FavoritePhoto'
 
 @Entity()
 export class User {
@@ -38,4 +40,7 @@ export class User {
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
   profile?: Profile
+
+  @OneToMany(() => FavoritePhoto, (photo) => photo.user)
+  favoritePhotos?: FavoritePhoto[]
 }
