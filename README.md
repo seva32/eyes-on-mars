@@ -15,7 +15,7 @@ sudo apt install docker-compose
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
 
-docker-compose up --build # docker-compose up --build [service] & docker-compose restart
+docker-compose -f docker-compose.dev.yml up --build # docker-compose up --build [service] & docker-compose restart
 # .env issues with docker-compose bc windows use CRLF and we need LF for unix, options:
 # 1 change it in vscode and save
 # 2 dos2unix .env
@@ -25,10 +25,14 @@ docker-compose logs -f
 # docker compose config
 # docker system prune --volumes
 # docker system prune -a
+# docker volume ls
+# docker ps -a --filter volume=<volume_name>
+# docker volume prune
+# docker volume rm <volume_name>
 # docker builder prune
 # export $(grep -v '^#' .env | xargs) # there was an issue with crlf and lf for .env
 docker exec [container] env
-export $(grep -v '^#' .env | xargs) && docker exec -it "$POSTGRES_HOST" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+export $(grep -v '^#' .env | xargs) && docker exec -it "$POSTGRES_HOST_DEV" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
 docker exec -it mars_project_nextjs sh
 # docker ps --format "table {{.ID}}\t{{.Command}}\t{{.Names}}\t{{.Status}}"
 yarn typeorm migration:create src/migrations/[CreateUsersAndProfiles]
@@ -41,11 +45,15 @@ When trying to enter the container the user was not found, bc there was an old v
 To use buildkit:
 
 ```bash
+mkdir -p ~/.docker/cli-plugins
+curl -sL https://github.com/docker/buildx/releases/download/v0.21.2/buildx-v0.21.2.linux-amd64 -o ~/.docker/cli-plugins/docker-buildx
+chmod +x ~/.docker/cli-plugins/docker-buildx
+
 # Enable BuildKit
 export DOCKER_BUILDKIT=1
 
 # Create and use a new builder instance
-docker buildx create --use
+docker buildx create --name marsbuilder --use
 
 # Build the images using docker-compose with BuildKit enabled
 docker-compose build
@@ -67,3 +75,11 @@ POSTGRES_DB=mars_db
 POSTGRES_HOST=mars_db_container
 POSTGRES_PORT=5555
 ```
+
+```bash
+docker-compose build
+docker-compose up
+docker-compose run nextjs yarn run migrate
+```
+
+If something fails for TypeORM, check the ports in .env and ormconfig.ts
