@@ -1,4 +1,8 @@
+import 'reflect-metadata'
 import { DataSource } from 'typeorm'
+import { User } from '../entities/User'
+import { Profile } from '../entities/Profile'
+import { FavoritePhoto } from '../entities/FavoritePhoto'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -9,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: process.env.POSTGRES_DB,
   synchronize: false, // use migrations instead of sync
   logging: true,
-  entities: ['src/entities/*.ts'],
+  entities: [User, Profile, FavoritePhoto],
   migrations: ['src/migrations/*.ts'],
   migrationsTableName: 'migrations',
 })

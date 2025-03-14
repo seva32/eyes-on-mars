@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
-import { AppDataSource } from '@/config/ormconfig'
-import { User } from '@/entities/User'
+import { AppDataSource } from '../../../config/ormconfig'
+import { User } from '../../../entities/User'
 
 export default async function handler(
   req: NextApiRequest,
