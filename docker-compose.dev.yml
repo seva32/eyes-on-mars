@@ -33,8 +33,9 @@ services:
     networks:
       - mars_network
     volumes:
-      - .:/app
+      - ./src:/app/src
       - /app/node_modules
+      - .next:/app/.next
 
 networks:
   mars_network:

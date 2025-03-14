@@ -6,3 +6,5 @@ declare global {
     user?: TokenPayload
   }
 }
+
+declare module 'swagger-ui-dist'

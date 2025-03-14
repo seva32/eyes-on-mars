@@ -2,7 +2,7 @@ import { NextApiResponse } from 'next'
 import { AppDataSource } from '../../../config/ormconfig'
 import { FavoritePhoto } from '../../../entities/FavoritePhoto'
 import { authMiddleware } from '../../../middleware/auth'
-import { User } from '@/entities/User'
+import { User } from '../../../entities/User'
 
 export default async function handler(
   req: AuthenticatedRequest,
