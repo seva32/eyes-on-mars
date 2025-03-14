@@ -1,14 +1,6 @@
 import React from 'react'
 import Layout from '../components/Layout'
 
-// AppDataSource.initialize()
-//   .then(() => {
-//     console.log('Database connected!')
-//   })
-//   .catch((err) => {
-//     console.error('Error during Data Source initialization:', err)
-//   })
-
 const Home = () => {
   return (
     <Layout>
