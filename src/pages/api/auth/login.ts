@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
-import { AppDataSource } from '../../../config/ormconfig'
+import { initializeDataSource } from '../../../config/data-source'
 import { User } from '../../../entities/User'
 import { generateToken } from '../../../utils/jwt'
 
@@ -16,6 +16,8 @@ export default async function handler(
         .status(400)
         .json({ message: 'Username, password and email are required' })
     }
+
+    const AppDataSource = await initializeDataSource()
 
     const user = await AppDataSource.getRepository(User).findOne({
       where: { username },

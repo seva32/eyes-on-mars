@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
-// import { AppDataSource } from '../../../config/ormconfig'
 import { initializeDataSource } from '../../../config/data-source'
 import { User } from '../../../entities/User'
 

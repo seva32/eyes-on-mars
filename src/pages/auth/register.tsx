@@ -1,53 +1,112 @@
 import React, { useState } from 'react'
 import { Button } from 'eyes-on-mars-ds'
 import Layout from '../../components/Layout'
+import { InputField } from '../../components/common/Input'
 
 const Signup = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    username: '',
+  })
+  const [status, setStatus] = useState({
+    loading: false,
+    error: '',
+    success: '',
+  })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value })
+  }
 
   const handleSignup = async () => {
-    setLoading(true)
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, username }),
-    })
-    setLoading(false)
-    if (res.ok) alert('Signup successful!')
+    const { email, password, username } = formData
+
+    if (!email || !password) {
+      setStatus({ ...status, error: 'Email and password are required.' })
+      return
+    }
+
+    setStatus({ loading: true, error: '', success: '' })
+
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, username }),
+      })
+
+      if (res.ok) {
+        setStatus({ loading: false, success: 'Signup successful!', error: '' })
+        setFormData({ email: '', password: '', username: '' })
+      } else {
+        const data = await res.json()
+        setStatus({
+          loading: false,
+          error: data.message || 'Signup failed.',
+          success: '',
+        })
+      }
+    } catch {
+      setStatus({
+        loading: false,
+        error: 'An error occurred. Please try again.',
+        success: '',
+      })
+    }
   }
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          className="p-2 border rounded mb-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-        />
-        <input
-          placeholder="Username"
-          className="p-2 border rounded mb-2"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          autoComplete="username"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="p-2 border rounded mb-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button variant="primary" onClick={handleSignup} disabled={loading}>
-          {loading ? 'Signing up...' : 'Sign Up'}
-        </Button>
+      <div className="flex flex-col items-center justify-center h-screen px-4">
+        <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
+
+        {status.error && (
+          <p className="text-red-500 mb-4" role="alert" aria-live="assertive">
+            {status.error}
+          </p>
+        )}
+        {status.success && (
+          <p className="text-green-500 mb-4" role="status" aria-live="polite">
+            {status.success}
+          </p>
+        )}
+
+        <div className="w-full max-w-sm">
+          <InputField
+            id="email"
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <InputField
+            id="username"
+            label="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <InputField
+            id="password"
+            label="Password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <div className="mb-10" />
+
+          <Button
+            variant="primary"
+            onClick={handleSignup}
+            disabled={status.loading}
+            style={{ width: '100%' }}
+          >
+            {status.loading ? 'Signing up...' : 'Sign Up'}
+          </Button>
+        </div>
       </div>
     </Layout>
   )
