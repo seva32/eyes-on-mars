@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
-import { AppDataSource } from '../../../config/ormconfig'
+// import { AppDataSource } from '../../../config/ormconfig'
+import { initializeDataSource } from '../../../config/data-source'
 import { User } from '../../../entities/User'
 
 export default async function handler(
@@ -10,23 +11,25 @@ export default async function handler(
   if (req.method === 'POST') {
     const { username, password, email } = req.body
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res
         .status(400)
-        .json({ message: 'Username and password are required' })
+        .json({ message: 'Email and password are required' })
     }
 
+    const AppDataSource = await initializeDataSource()
+
     const existingUser = await AppDataSource.getRepository(User).findOne({
-      where: { username },
+      where: [{ username: username || email }, { email }],
     })
     if (existingUser) {
-      return res.status(400).json({ message: 'Username already exists' })
+      return res.status(400).json({ message: 'User already exists' })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const user = new User()
-    user.username = username
+    user.username = username || email
     user.password = hashedPassword
     user.email = email
 

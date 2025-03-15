@@ -14,6 +14,7 @@ export const AppDataSource = new DataSource({
   synchronize: false, // use migrations instead of sync
   logging: true,
   entities: [User, Profile, FavoritePhoto],
+  // entities: [__dirname + '/../**/entities/*.entity.{js,ts}'],
   migrations: ['src/migrations/*.ts'],
   migrationsTableName: 'migrations',
 })
