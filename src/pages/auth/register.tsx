@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSignup = async () => {
@@ -12,7 +13,7 @@ const Signup = () => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, username }),
     })
     setLoading(false)
     if (res.ok) alert('Signup successful!')
@@ -28,6 +29,14 @@ const Signup = () => {
           className="p-2 border rounded mb-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+        />
+        <input
+          placeholder="Username"
+          className="p-2 border rounded mb-2"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
         <input
           type="password"

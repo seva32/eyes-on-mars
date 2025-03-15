@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
-import { User } from './User'
+import { IUser } from './IUser'
+import { IFavoritePhoto } from './IFavoritePhoto'
 
-@Entity()
-export class FavoritePhoto {
+@Entity({ name: 'favorite_photo' })
+export class FavoritePhoto implements IFavoritePhoto {
   @PrimaryGeneratedColumn()
   id!: number
 
@@ -18,6 +19,6 @@ export class FavoritePhoto {
   @Column()
   sol?: number
 
-  @ManyToOne(() => User, (user) => user.favoritePhotos)
-  user!: User
+  @ManyToOne('User', 'favoritePhotos')
+  user!: IUser
 }

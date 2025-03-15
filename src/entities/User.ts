@@ -8,11 +8,12 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm'
-import { Profile } from './Profile'
-import { FavoritePhoto } from './FavoritePhoto'
+import { IProfile } from './IProfile'
+import { IFavoritePhoto } from './IFavoritePhoto'
+import { IUser } from './IUser'
 
-@Entity()
-export class User {
+@Entity({ name: 'user' })
+export class User implements IUser {
   @PrimaryGeneratedColumn()
   id!: number
 
@@ -37,10 +38,10 @@ export class User {
   @UpdateDateColumn()
   updatedAt?: Date
 
-  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
-  @JoinColumn()
-  profile?: Profile
+  @OneToOne('Profile', 'user')
+  @JoinColumn({ name: 'profileId' })
+  profile?: IProfile
 
-  @OneToMany(() => FavoritePhoto, (photo) => photo.user)
-  favoritePhotos?: FavoritePhoto[]
+  @OneToMany('FavoritePhoto', 'user')
+  favoritePhotos?: IFavoritePhoto[]
 }

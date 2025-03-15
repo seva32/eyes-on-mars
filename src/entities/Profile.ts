@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm'
-import { User } from './User'
+import { IUser } from './IUser'
+import { IProfile } from './IProfile'
 
-@Entity()
-export class Profile {
+@Entity({ name: 'profile' })
+export class Profile implements IProfile {
   @PrimaryGeneratedColumn()
   id!: number
 
@@ -12,6 +13,6 @@ export class Profile {
   @Column({ nullable: true })
   bio?: string
 
-  @OneToOne(() => User, (user) => user.profile)
-  user!: User
+  @OneToOne('User', 'profile')
+  user!: IUser
 }

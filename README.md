@@ -33,7 +33,7 @@ docker-compose logs -f
 # export $(grep -v '^#' .env | xargs) # there was an issue with crlf and lf for .env
 docker exec [container] env
 export $(grep -v '^#' .env | xargs) && docker exec -it "$POSTGRES_HOST_DEV" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
-docker exec -it mars_project_nextjs sh
+docker exec -it mars_project_nextjs_dev sh
 # docker ps --format "table {{.ID}}\t{{.Command}}\t{{.Names}}\t{{.Status}}"
 yarn typeorm migration:create src/migrations/[CreateUsersAndProfiles]
 vi src/migrations/CreateUsersAndProfiles.ts
