@@ -38,8 +38,8 @@ export class User implements IUser {
   @UpdateDateColumn()
   updatedAt?: Date
 
-  @OneToOne('Profile', 'userId')
-  @JoinColumn()
+  @OneToOne('Profile', 'user')
+  @JoinColumn({ name: 'profileId' })
   profile?: IProfile
 
   @OneToMany('FavoritePhoto', 'user')

@@ -59,6 +59,16 @@ export class CreateFavoritePhotos20250312123000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    const table = await queryRunner.getTable('favorite_photo')
+    if (table) {
+      const foreignKey = table.foreignKeys.find(
+        (fk) => fk.columnNames.indexOf('userId') !== -1,
+      )
+      if (foreignKey) {
+        await queryRunner.dropForeignKey('favorite_photo', foreignKey)
+      }
+    }
+
     await queryRunner.dropTable('favorite_photo')
   }
 }

@@ -29,13 +29,14 @@ const Signup = () => {
           className="p-2 border rounded mb-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
         />
         <input
-          type="text"
           placeholder="Username"
           className="p-2 border rounded mb-2"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
         <input
           type="password"
