@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from 'eyes-on-mars-ds'
 import Layout from '../../components/Layout'
 import { InputField } from '../../components/common/Input'
+import { useRouter } from 'next/router'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Signup = () => {
     error: '',
     success: '',
   })
+  const router = useRouter()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -30,7 +32,7 @@ const Signup = () => {
     setStatus({ loading: true, error: '', success: '' })
 
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch('/api/auth-app/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, username }),
@@ -39,6 +41,7 @@ const Signup = () => {
       if (res.ok) {
         setStatus({ loading: false, success: 'Signup successful!', error: '' })
         setFormData({ email: '', password: '', username: '' })
+        router.push('/user/profile')
       } else {
         const data = await res.json()
         setStatus({

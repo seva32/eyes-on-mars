@@ -1,5 +1,5 @@
 # Use the latest Node.js LTS version as base
-FROM node:20-alpine
+FROM node:22-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 3003
 
 # Start the development server
-CMD ["yarn", "dev2"]
+CMD ["yarn", "dev"]
