@@ -6,7 +6,7 @@ services:
     container_name: '${POSTGRES_HOST_DEV}'
     restart: always
     env_file:
-      - .env
+      - .env.local
     environment:
       POSTGRES_USER: '${POSTGRES_USER}'
       POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
@@ -29,13 +29,22 @@ services:
     depends_on:
       - postgres
     env_file:
-      - .env
+      - .env.local
+    environment:
+      NODE_ENV: 'development'
+      NEXT_PUBLIC_SERVER_PORT: '${NEXT_PUBLIC_SERVER_PORT}'
+      NEXT_PUBLIC_SERVER_HOST: '${NEXT_PUBLIC_SERVER_HOST}'
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: '${NEXT_PUBLIC_GOOGLE_CLIENT_ID}'
+      NEXT_PUBLIC_GOOGLE_CLIENT_SECRET: '${NEXT_PUBLIC_GOOGLE_CLIENT_SECRET}'
+      NEXT_PUBLIC_NASA_API_URL: '${NEXT_PUBLIC_NASA_API_URL}'
+      NEXT_PUBLIC_NASA_API_KEY: '${NEXT_PUBLIC_NASA_API_KEY}'
+      NEXTAUTH_URL: '${NEXTAUTH_URL}'
+      NEXTAUTH_URL_INTERNAL: '${NEXTAUTH_URL_INTERNAL}'
     networks:
       - mars_network
     volumes:
-      - ./src:/app/src
+      - .:/app
       - /app/node_modules
-      - .next:/app/.next
 
 networks:
   mars_network:

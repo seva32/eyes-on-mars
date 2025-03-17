@@ -6,7 +6,7 @@ services:
     container_name: '${POSTGRES_HOST_PROD}'
     restart: always
     env_file:
-      - .env
+      - .env.production
     environment:
       POSTGRES_USER: '${POSTGRES_USER}'
       POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
@@ -29,7 +29,7 @@ services:
     depends_on:
       - postgres
     env_file:
-      - .env
+      - .env.production
     networks:
       - mars_network_prod
     volumes:

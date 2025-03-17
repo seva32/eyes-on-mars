@@ -1,18 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm'
-import { IUser } from './IUser'
-import { IProfile } from './IProfile'
+import type { IUser } from './interfaces/IUser'
+import type { IProfile } from './interfaces/IProfile'
 
-@Entity({ name: 'profile' })
 export class Profile implements IProfile {
-  @PrimaryGeneratedColumn()
   id!: number
-
-  @Column({ nullable: true })
   avatarUrl?: string
-
-  @Column({ nullable: true })
   bio?: string
-
-  @OneToOne('User', 'profile')
   user!: IUser
 }

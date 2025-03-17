@@ -20,7 +20,7 @@ docker-compose -f docker-compose.dev.yml up --build # docker-compose up --build 
 # 1 change it in vscode and save
 # 2 dos2unix .env
 # 3 export $(grep -v '^#' .env | xargs) before docker build
-docker-compose up -d --build
+docker-compose -f docker-compose.dev.yml --env-file .env.local up -d --build
 docker-compose logs -f
 # docker compose config
 # docker system prune --volumes
@@ -32,12 +32,11 @@ docker-compose logs -f
 # docker builder prune
 # export $(grep -v '^#' .env | xargs) # there was an issue with crlf and lf for .env
 docker exec [container] env
-export $(grep -v '^#' .env | xargs) && docker exec -it "$POSTGRES_HOST_DEV" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+export $(grep -v '^#' .env.local | xargs) && docker exec -it "$POSTGRES_HOST_DEV" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
 docker exec -it mars_project_nextjs_dev sh
 # docker ps --format "table {{.ID}}\t{{.Command}}\t{{.Names}}\t{{.Status}}"
-yarn typeorm migration:create src/migrations/[CreateUsersAndProfiles]
-vi src/migrations/CreateUsersAndProfiles.ts
-yarn ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run -d src/config/ormconfig.ts
+yarn run prisma:db:pull
+yarn run prisma:generate
 ```
 
 When trying to enter the container the user was not found, bc there was an old volume used, so docker-compose down -v was the solution, and then docker-compose up -d

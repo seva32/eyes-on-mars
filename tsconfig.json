@@ -16,6 +16,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
     "plugins": [
       {
         "name": "next"
@@ -29,5 +31,5 @@
     "src/**/*.ts",
     "src/types"
   ],
-  "exclude": ["node_modules", "src/config/ormconfig.ts"]
+  "exclude": ["node_modules"]
 }

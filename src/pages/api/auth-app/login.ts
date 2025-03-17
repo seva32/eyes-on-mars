@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
-import { initializeDataSource } from '../../../config/data-source'
-import { User } from '../../../entities/User'
 import { generateToken } from '../../../utils/jwt'
 
 export default async function handler(
@@ -11,22 +9,23 @@ export default async function handler(
   if (req.method === 'POST') {
     const { username, password, email } = req.body
 
-    if (!username || !password || !email) {
+    if (!password || !email) {
       return res
         .status(400)
         .json({ message: 'Username, password and email are required' })
     }
 
-    const AppDataSource = await initializeDataSource()
-
-    const user = await AppDataSource.getRepository(User).findOne({
-      where: { username },
+    const user = await prisma.user.findUnique({
+      where: {
+        OR: [{ email }, { username }],
+      },
     })
+
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' })
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user?.password)
     if (!isPasswordValid) {
       return res.status(400).json({ message: 'Invalid credentials to login' })
     }

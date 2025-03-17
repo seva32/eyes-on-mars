@@ -1,8 +1,6 @@
 import { NextApiResponse } from 'next'
-import { AppDataSource } from '../../../config/ormconfig'
-import { FavoritePhoto } from '../../../entities/FavoritePhoto'
+// import { FavoritePhoto } from '../../../entities/FavoritePhoto'
 import { authMiddleware } from '../../../middleware/auth'
-import { User } from '../../../entities/User'
 
 export default async function handler(
   req: AuthenticatedRequest,
@@ -11,11 +9,8 @@ export default async function handler(
   if (req.method === 'GET') {
     try {
       authMiddleware(req, res, async () => {
-        const user = req.user as unknown as User
-        const favorites = await AppDataSource.getRepository(FavoritePhoto).find(
-          { where: { user } },
-        )
-        return res.status(200).json(favorites)
+        // const favorites = FavoritePhoto.find
+        return res.status(200).json({ message: 'Favorites' })
       })
     } catch {
       return res

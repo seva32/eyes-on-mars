@@ -2,9 +2,16 @@ import React, { useState } from 'react'
 import { Button } from 'eyes-on-mars-ds'
 import Layout from '../../components/Layout'
 import { InputField } from '../../components/common/Input'
-import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next'
+import { getCsrfToken, signIn } from 'next-auth/react'
 
-const Login = () => {
+function Login({
+  csrfToken,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -15,12 +22,19 @@ const Login = () => {
     error: '',
     success: '',
   })
+  const router = useRouter()
+  console.log(csrfToken)
+  console.log(process.env.NEXT_PUBLIC_NEXTAUTH_URL)
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID)
+  console.log(process.env.NEXTAUTH_URL)
+  console.log(process.env.NEXTAUTH_URL_INTERNAL)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
   }
 
-  const handleSignin = async () => {
+  const handleSignin = async (e: React.FormEvent) => {
+    e.preventDefault()
     const { email, password, username } = formData
 
     if (!email || !password) {
@@ -31,23 +45,26 @@ const Login = () => {
     setStatus({ loading: true, error: '', success: '' })
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, username }),
+      const response = await signIn('credentials', {
+        email,
+        password,
+        username,
+        redirect: false,
+        // callbackUrl: '/profile',
       })
-
-      if (res.ok) {
-        setStatus({ loading: false, success: 'Signup successful!', error: '' })
-        setFormData({ email: '', password: '', username: '' })
-        await signIn('credentials', { redirect: true, callbackUrl: '/' })
-      } else {
-        const data = await res.json()
+      if (response?.error) {
         setStatus({
           loading: false,
-          error: data.message || 'Signup failed.',
+          error: response.error,
           success: '',
         })
+      } else {
+        setStatus({
+          loading: false,
+          error: '',
+          success: 'Sign in successful!',
+        })
+        router.push('/user/profile')
       }
     } catch {
       setStatus({
@@ -119,3 +136,11 @@ const Login = () => {
 }
 
 export default Login
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  }
+}
