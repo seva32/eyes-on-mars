@@ -43,9 +43,10 @@ function Login() {
       })
 
       if (response?.error) {
+        console.error('Sign in', response.error)
         setStatus({
           loading: false,
-          error: response.error,
+          error: 'Invalid credentials. Please try again.',
           success: '',
         })
       } else {
