@@ -32,7 +32,7 @@ const Signup = () => {
     setStatus({ loading: true, error: '', success: '' })
 
     try {
-      const res = await fetch('/api/auth-app/register', {
+      const res = await fetch('/api/auth-app/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, username }),

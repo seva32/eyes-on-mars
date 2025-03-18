@@ -23,7 +23,7 @@ export const nextAuthConfig = {
       },
       authorize: async (credentials) => {
         const res = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/auth-app/login`,
+          `${process.env.NEXTAUTH_URL}/api/auth-app/signin`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -59,8 +59,8 @@ export const nextAuthConfig = {
     }),
   ],
   pages: {
-    signIn: '/auth/login',
-    signOut: '/auth/logout',
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
     error: '/auth/error',
   },
   callbacks: {

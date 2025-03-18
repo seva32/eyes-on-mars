@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { signOut } from 'next-auth/react'
 
-const Logout = () => {
+const SignOut = () => {
   useEffect(() => {
     signOut({ redirect: true, callbackUrl: '/' })
   }, [])
@@ -9,4 +9,4 @@ const Logout = () => {
   return null
 }
 
-export default Logout
+export default SignOut
