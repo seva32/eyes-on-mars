@@ -1,15 +1,37 @@
-import React from 'react'
-import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
+import Image from 'next/image'
+import type { Profile } from '../../entities/Profile'
 
-const Profile = () => {
-  const { data: session, status } = useSession({ required: true })
-  console.log(session)
-  console.log(process.env.NEXTAUTH_URL)
-  debugger
+const ProfilePage = () => {
+  const { data: session, status } = useSession()
+  const [profile, setProfile] = useState<Profile | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  if (status === 'loading') {
+  console.log('session: >>>', session)
+  console.log('status: >>>', status)
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetch('/api/profile', {
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProfile(data)
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.error('Error fetching profile:', error)
+          setLoading(false)
+        })
+    }
+  }, [status, session])
+
+  if (loading) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen">
@@ -19,14 +41,11 @@ const Profile = () => {
     )
   }
 
-  if (!session) {
+  if (!profile) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-2xl font-bold mb-4">Profile</h1>
-          <p className="text-red-500 mb-4">
-            You must be logged in to view this page.
-          </p>
+          <p>Profile not found</p>
         </div>
       </Layout>
     )
@@ -36,27 +55,28 @@ const Profile = () => {
     <Layout>
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-2xl font-bold mb-4">Profile</h1>
-        <p className="mb-4">
-          Welcome, {session.user?.name || session.user?.email}
-        </p>
-        <Image
-          src={session.user?.image || '/default-profile.png'}
-          alt="Profile Picture"
-          width={128}
-          height={128}
-          className="rounded-full mb-4"
-        />
-        <p className="mb-2">
-          <strong>Name:</strong> {session.user?.name}
-        </p>
-        <p className="mb-2">
-          <strong>Email:</strong> {session.user?.email}
-        </p>
+        <p className="mb-4">Welcome, {profile.user.username}</p>
+        <div className="flex flex-col items-center">
+          <Image
+            src={session?.user?.image || '/default-profile.png'}
+            alt="Profile Picture"
+            width={128}
+            height={128}
+            className="w-32 h-32 rounded-full mb-4"
+          />
+          <p className="mb-2">
+            <strong>Name:</strong> {profile.user.username}
+          </p>
+          <p className="mb-2">
+            <strong>Email:</strong> {profile.user.email}
+          </p>
+          <p className="mb-2">
+            <strong>Bio:</strong> {profile.bio || 'No bio'}
+          </p>
+        </div>
       </div>
     </Layout>
   )
 }
 
-Profile.auth = true
-
-export default Profile
+export default ProfilePage

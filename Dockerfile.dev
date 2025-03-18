@@ -8,11 +8,18 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
+RUN yarn global add dotenv-cli
+
 # Copy all source files
 COPY . .
 
 # Expose port 3003
 EXPOSE 3003
+
+COPY .env.local .env.local
+
+# Generate prisma client
+RUN dotenv -e .env.local -- npx prisma generate
 
 # Start the development server
 CMD ["yarn", "dev"]

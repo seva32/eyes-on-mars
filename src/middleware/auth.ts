@@ -6,22 +6,24 @@ interface AuthenticatedRequest extends NextApiRequest {
 }
 
 export const authMiddleware = (
-  req: AuthenticatedRequest,
-  res: NextApiResponse,
-  next: () => void,
+  handler: (req: AuthenticatedRequest, res: NextApiResponse) => void,
 ) => {
-  const token = req.headers.authorization?.split(' ')[1]
+  return async (req: AuthenticatedRequest, res: NextApiResponse) => {
+    const token = req.headers.authorization?.split(' ')[1]
 
-  if (!token) {
-    return res.status(401).json({ message: 'Authentication token is required' })
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: 'Authentication token is required' })
+    }
+
+    const user = verifyToken(token)
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid or expired token' })
+    }
+
+    req.user = user
+    return handler(req, res)
   }
-
-  const user = verifyToken(token)
-
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid or expired token' })
-  }
-
-  req.user = user
-  next()
 }

@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next'
 // import { FavoritePhoto } from '../../../entities/FavoritePhoto'
-import { authMiddleware } from '../../../middleware/auth'
+// import { authMiddleware } from '../../../middleware/auth'
 
 export default async function handler(
   req: AuthenticatedRequest,
@@ -8,10 +8,10 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
-      authMiddleware(req, res, async () => {
-        // const favorites = FavoritePhoto.find
-        return res.status(200).json({ message: 'Favorites' })
-      })
+      // authMiddleware(req, res, async () => {
+      //   // const favorites = FavoritePhoto.find
+      //   return res.status(200).json({ message: 'Favorites' })
+      // })
     } catch {
       return res
         .status(500)
