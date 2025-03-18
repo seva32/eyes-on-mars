@@ -70,7 +70,6 @@ export const nextAuthConfig = {
         token.oauthId = account.id
       }
       if (user) {
-        console.log('>>>>>>>>>>', user)
         token.user = user
       }
       return token
@@ -82,14 +81,14 @@ export const nextAuthConfig = {
       }
       return session
     },
-    async signIn(all) {
-      console.log('Sign in callback', all)
-      return true
-    },
-    async redirect({ url, baseUrl }) {
-      console.log('redirect callback', url, baseUrl)
-      return baseUrl
-    },
+    // async signIn(all) {
+    //   console.log('Sign in callback', all)
+    //   return true
+    // },
+    // async redirect({ url, baseUrl }) {
+    //   console.log('redirect callback', url, baseUrl)
+    //   return baseUrl
+    // },
   },
   session: {
     strategy: 'jwt',
@@ -98,24 +97,23 @@ export const nextAuthConfig = {
     maxAge: 30 * 24 * 60 * 60,
   },
   events: {
-    async signIn(message) {
-      console.log('signin event', message)
-    },
-    async signOut(message) {
-      console.log('signout event', message)
-    },
-    async createUser(message) {
-      console.log('createuser event', message)
-    },
-    async updateUser(message) {
-      console.log('updateuser event', message)
-    },
-    async linkAccount(message) {
-      console.log('linkaccount event', message)
-    },
+    // async signIn(message) {
+    //   console.log('signin event', message)
+    // },
+    // async signOut(message) {
+    //   console.log('signout event', message)
+    // },
+    // async createUser(message) {
+    //   console.log('createuser event', message)
+    // },
+    // async updateUser(message) {
+    //   console.log('updateuser event', message)
+    // },
+    // async linkAccount(message) {
+    //   console.log('linkaccount event', message)
+    // },
     async session(message) {
       console.log('session event', message)
-      console.log('session event', message.token?.user)
     },
   },
   debug: true,

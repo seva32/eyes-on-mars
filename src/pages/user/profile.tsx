@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      fetch('/api/profile', {
+      fetch('/api/user/profile', {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
         },
@@ -51,11 +51,13 @@ const ProfilePage = () => {
     )
   }
 
+  console.log('profile: >>>', profile)
+
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-2xl font-bold mb-4">Profile</h1>
-        <p className="mb-4">Welcome, {profile.user.username}</p>
+        <p className="mb-4">Welcome</p>
         <div className="flex flex-col items-center">
           <Image
             src={session?.user?.image || '/default-profile.png'}
@@ -65,10 +67,10 @@ const ProfilePage = () => {
             className="w-32 h-32 rounded-full mb-4"
           />
           <p className="mb-2">
-            <strong>Name:</strong> {profile.user.username}
+            <strong>Name:</strong> {profile.user?.username || 'No name'}
           </p>
           <p className="mb-2">
-            <strong>Email:</strong> {profile.user.email}
+            <strong>Email:</strong> {profile.user?.email || 'No email'}
           </p>
           <p className="mb-2">
             <strong>Bio:</strong> {profile.bio || 'No bio'}

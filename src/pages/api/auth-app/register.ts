@@ -37,8 +37,7 @@ export default async function handler(
       return res
         .status(201)
         .json({ message: 'User registered successfully', user: newUser })
-    } catch (error) {
-      console.error('Register:', error)
+    } catch {
       return res
         .status(500)
         .json({ message: 'Internal Server Error: register' })

@@ -41,7 +41,7 @@ function Login() {
         redirect: false,
         callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
       })
-      console.log(response?.url)
+
       if (response?.error) {
         setStatus({
           loading: false,
