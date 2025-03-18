@@ -5,7 +5,7 @@ import { InputField } from '../../components/common/Input'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
 
-function Login() {
+function SignIn() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -119,11 +119,11 @@ function Login() {
         </div>
         <p className="mt-5 mb-5">Or</p>
         <Button variant="secondary" onClick={() => signIn('google')}>
-          Login with Google
+          Sign In with Google
         </Button>
       </div>
     </Layout>
   )
 }
 
-export default Login
+export default SignIn

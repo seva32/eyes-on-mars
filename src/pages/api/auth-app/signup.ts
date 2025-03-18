@@ -1,16 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 import prisma from '../../../lib/prisma'
-// import { getToken } from 'next-auth/jwt'
-
-// const secret = process.env.NEXTAUTH_SECRET
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  // const token = await getToken({ req, secret })
-
   if (req.method === 'POST') {
     const { username, password, email } = req.body
 
