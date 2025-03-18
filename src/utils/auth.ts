@@ -112,9 +112,9 @@ export const nextAuthConfig = {
     // async linkAccount(message) {
     //   console.log('linkaccount event', message)
     // },
-    async session(message) {
-      console.log('session event', message)
-    },
+    // async session(message) {
+    //   console.log('session event', message)
+    // },
   },
   debug: true,
   secret: process.env.NEXTAUTH_SECRET,
