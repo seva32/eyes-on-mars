@@ -25,11 +25,6 @@
     ],
     "outDir": "./dist"
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "src/**/*.ts",
-    "src/types"
-  ],
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

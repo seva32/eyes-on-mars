@@ -3,15 +3,9 @@ import { Button } from 'eyes-on-mars-ds'
 import Layout from '../../components/Layout'
 import { InputField } from '../../components/common/Input'
 import { useRouter } from 'next/router'
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next'
-import { getCsrfToken, signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
-function Login({
-  csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,11 +17,6 @@ function Login({
     success: '',
   })
   const router = useRouter()
-  console.log(csrfToken)
-  console.log(process.env.NEXT_PUBLIC_NEXTAUTH_URL)
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID)
-  console.log(process.env.NEXTAUTH_URL)
-  console.log(process.env.NEXTAUTH_URL_INTERNAL)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -50,8 +39,9 @@ function Login({
         password,
         username,
         redirect: false,
-        // callbackUrl: '/profile',
+        callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
       })
+      console.log(response?.url)
       if (response?.error) {
         setStatus({
           loading: false,
@@ -136,11 +126,3 @@ function Login({
 }
 
 export default Login
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  }
-}

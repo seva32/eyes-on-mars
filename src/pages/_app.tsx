@@ -20,11 +20,9 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps & { Component: NextComponentType & { auth?: boolean } }) {
-  console.log('>>>>>>>>>>>', session)
   return (
     <SessionProvider
       session={session}
-      basePath="/"
       refetchInterval={5 * 60}
       refetchOnWindowFocus={true}
     >

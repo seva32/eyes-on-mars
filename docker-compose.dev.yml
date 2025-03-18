@@ -30,16 +30,6 @@ services:
       - postgres
     env_file:
       - .env.local
-    environment:
-      NODE_ENV: 'development'
-      NEXT_PUBLIC_SERVER_PORT: '${NEXT_PUBLIC_SERVER_PORT}'
-      NEXT_PUBLIC_SERVER_HOST: '${NEXT_PUBLIC_SERVER_HOST}'
-      NEXT_PUBLIC_GOOGLE_CLIENT_ID: '${NEXT_PUBLIC_GOOGLE_CLIENT_ID}'
-      NEXT_PUBLIC_GOOGLE_CLIENT_SECRET: '${NEXT_PUBLIC_GOOGLE_CLIENT_SECRET}'
-      NEXT_PUBLIC_NASA_API_URL: '${NEXT_PUBLIC_NASA_API_URL}'
-      NEXT_PUBLIC_NASA_API_KEY: '${NEXT_PUBLIC_NASA_API_KEY}'
-      NEXTAUTH_URL: '${NEXTAUTH_URL}'
-      NEXTAUTH_URL_INTERNAL: '${NEXTAUTH_URL_INTERNAL}'
     networks:
       - mars_network
     volumes:
