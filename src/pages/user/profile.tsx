@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
-// import Image from 'next/image'
+import Image from 'next/image'
 import type { Profile } from '../../entities/Profile'
+import { Dropzone } from 'eyes-on-mars-ds'
 
 const ProfilePage = () => {
   const { status } = useSession()
@@ -67,13 +68,13 @@ const ProfilePage = () => {
         <h1 className="text-2xl font-bold mb-4">Profile now</h1>
         <p className="mb-4">Welcome</p>
         <div className="flex flex-col items-center">
-          {/* <Image
-            src={profile.user?.avatar || '/default-profile.png'}
+          <Image
+            src="https://res.cloudinary.com/seva32/image/upload/v1602277227/avatar_vkmaep.svg"
             alt="Profile Picture"
             width={128}
             height={128}
             className="w-32 h-32 rounded-full mb-4"
-          /> */}
+          />
           <p className="mb-2">
             <strong>Name:</strong> {profile.user?.username || 'No name'}
           </p>
@@ -83,6 +84,12 @@ const ProfilePage = () => {
           <p className="mb-2">
             <strong>Bio:</strong> {profile.bio || 'No bio'}
           </p>
+          <div className="min-w-96 mt-4">
+            <Dropzone
+              handleAcceptUpload={({ file }) => console.log(file?.name)}
+              handleCancelUpload={() => console.log('canceled')}
+            />
+          </div>
         </div>
       </div>
     </Layout>
