@@ -76,11 +76,13 @@ POSTGRES_PORT=5555
 ```
 
 ```bash
-docker-compose build
-docker-compose up
-docker-compose run nextjs yarn run migrate
+docker-compose -f docker-compose.dev.yml --env-file .env.local build
+docker-compose -f docker-compose.dev.yml --env-file .env.local up
+docker-compose run nextjs yarn run prisma:migrate
 ```
 
 If something fails for TypeORM, check the ports in .env and ormconfig.ts
 
-For migrations just cmd to create and docker exec to run
+For migrations docker exec to run in nextjs container: yarn run prisma:migrate, or use docker-compose run nextjs yarn run prisma:migrate
+
+In windows create DB in Supabase and use the connexion string in .env.local, in .env.local update DATABASE_URL and comment NEXTAUTH_URLs, then yarn run dev:r
