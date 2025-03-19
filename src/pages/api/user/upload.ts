@@ -3,73 +3,87 @@ import cloudinary from '../../../lib/cloudinary'
 import { getSession } from 'next-auth/react'
 import multer from 'multer'
 import fs from 'fs/promises'
+import { IncomingMessage, ServerResponse } from 'http'
+import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 
-// Disable automatic body parsing
 export const config = {
   api: {
     bodyParser: false,
   },
 }
 
-// Configure Multer to store file temporarily
 const upload = multer({ dest: 'uploads/' })
 
-// Middleware to process file upload
+type MulterNextApiRequest = NextApiRequest &
+  ExpressRequest & { file?: Express.Multer.File }
+
 const uploadMiddleware = upload.single('file')
 
 function runMiddleware(
-  req: NextApiRequest,
-  res: NextApiResponse,
+  req: IncomingMessage & ExpressRequest,
+  res: ServerResponse & ExpressResponse,
   fn: (
-    req: NextApiRequest,
-    res: NextApiResponse,
-    callback: (result: any) => void,
+    req: ExpressRequest,
+    res: ExpressResponse,
+    next: (error?: unknown) => void,
   ) => void,
-) {
-  return new Promise<void>((resolve, reject) => {
-    fn(req, res, (result: any) =>
-      result instanceof Error ? reject(result) : resolve(result),
-    )
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fn(req as ExpressRequest, res as ExpressResponse, (error?: unknown) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
   })
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
-) {
+): Promise<void> {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' })
+    res.status(405).json({ error: 'Method Not Allowed' })
+    return
   }
 
   const session = await getSession({ req })
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' })
+    res.status(401).json({ error: 'Unauthorized' })
+    return
   }
 
+  const multerReq = req as MulterNextApiRequest
   let filePath: string | undefined
-  try {
-    await runMiddleware(req, res, uploadMiddleware)
 
-    filePath = (req as any).file?.path
+  try {
+    const parsedReq = req as NextApiRequest & ExpressRequest
+    const parsedRes = res as NextApiResponse & ExpressResponse
+    await runMiddleware(parsedReq, parsedRes, uploadMiddleware)
+
+    filePath = multerReq.file?.path
     if (!filePath) {
       throw new Error('No file uploaded')
     }
-
-    console.log('File path:', filePath)
 
     const result = await cloudinary.uploader.upload(filePath, {
       folder: 'uploads-eom',
     })
 
-    return res.status(200).json({ url: result.secure_url })
-  } catch (error: any) {
-    console.error('Upload failed:', error)
-    return res
+    res.status(200).json({ url: result.secure_url })
+  } catch (error) {
+    res
       .status(500)
-      .json({ error: 'Upload failed', details: error.message })
+      .json({ error: 'Upload failed', details: (error as Error).message })
   } finally {
-    if (filePath && filePath.startsWith('uploads/') && fs.stat(filePath)) {
-      await fs.unlink(filePath)
+    if (filePath && filePath.startsWith('uploads/')) {
+      try {
+        await fs.stat(filePath)
+        await fs.unlink(filePath)
+      } catch (err) {
+        console.error('Failed to delete file:', err)
+      }
     }
   }
 }
