@@ -74,10 +74,13 @@ export const nextAuthConfig = {
       }
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (token?.ouathProvider && token?.oauthId) {
         session.oauthProvider = token.oauthProvider as string
         session.oauthId = token.oauthId as string
+      }
+      if (user?.id) {
+        session.user = user
       }
       return session
     },

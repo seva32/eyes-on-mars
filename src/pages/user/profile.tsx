@@ -10,6 +10,8 @@ const ProfilePage = () => {
   const { status } = useSession()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -25,6 +27,32 @@ const ProfilePage = () => {
         })
     }
   }, [status])
+
+  const handleAcceptUpload = async ({ file }: { file: File | null }) => {
+    if (!file) return
+
+    setUploading(true)
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const response = await fetch('/api/user/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = await response.json()
+      if (response.ok) {
+        setImageUrl(data.url)
+      } else {
+        alert(data.error)
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+    } finally {
+      setUploading(false)
+    }
+  }
 
   if (status === 'unauthenticated') {
     return (
@@ -69,7 +97,10 @@ const ProfilePage = () => {
         <p className="mb-4">Welcome</p>
         <div className="flex flex-col items-center">
           <Image
-            src="https://res.cloudinary.com/seva32/image/upload/v1602277227/avatar_vkmaep.svg"
+            src={
+              imageUrl ||
+              'https://res.cloudinary.com/seva32/image/upload/v1602277227/avatar_vkmaep.svg'
+            }
             alt="Profile Picture"
             width={128}
             height={128}
@@ -86,8 +117,9 @@ const ProfilePage = () => {
           </p>
           <div className="min-w-96 mt-4">
             <Dropzone
-              handleAcceptUpload={({ file }) => console.log(file?.name)}
+              handleAcceptUpload={handleAcceptUpload}
               handleCancelUpload={() => console.log('canceled')}
+              savingImage={uploading}
             />
           </div>
         </div>
