@@ -9,6 +9,7 @@ import { Dropzone } from 'eyes-on-mars-ds'
 const ProfilePage = () => {
   const { status } = useSession()
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [user, setUser] = useState<{ username: string; email: string }>()
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
@@ -18,7 +19,9 @@ const ProfilePage = () => {
       fetch('/api/user/profile')
         .then((res) => res.json())
         .then((data) => {
-          setProfile(data)
+          const { profile, ...user } = data
+          setProfile(profile)
+          setUser(user)
           setLoading(false)
         })
         .catch((error) => {
@@ -98,8 +101,9 @@ const ProfilePage = () => {
         <div className="flex flex-col items-center">
           <Image
             src={
+              profile.avatarUrl ||
               imageUrl ||
-              'https://res.cloudinary.com/seva32/image/upload/v1602277227/avatar_vkmaep.svg'
+              'https://res.cloudinary.com/seva32/image/upload/v1742432740/vaxw6bogchqnt8qcdnnj.jpg'
             }
             alt="Profile Picture"
             width={128}
@@ -107,10 +111,10 @@ const ProfilePage = () => {
             className="w-32 h-32 rounded-full mb-4"
           />
           <p className="mb-2">
-            <strong>Name:</strong> {profile.user?.username || 'No name'}
+            <strong>Name:</strong> {user?.username || 'No name'}
           </p>
           <p className="mb-2">
-            <strong>Email:</strong> {profile.user?.email || 'No email'}
+            <strong>Email:</strong> {user?.email || 'No email'}
           </p>
           <p className="mb-2">
             <strong>Bio:</strong> {profile.bio || 'No bio'}
