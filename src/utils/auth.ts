@@ -37,7 +37,7 @@ export const nextAuthConfig = {
 
         if (res.ok) {
           const user = await res.json()
-          return user
+          return { ...user, accessToken: res.headers.get('Authorization') }
         } else {
           return null
         }
@@ -67,20 +67,32 @@ export const nextAuthConfig = {
     async jwt({ token, account, user }) {
       if (account) {
         token.oauthProvider = account.provider
-        token.oauthId = account.id
+        token.oauthId = account.userId
       }
       if (user) {
-        token.user = user
+        token.user = user as {
+          id: string
+          email: string
+          username: string
+          accessToken?: string
+        }
       }
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (token?.ouathProvider && token?.oauthId) {
         session.oauthProvider = token.oauthProvider as string
         session.oauthId = token.oauthId as string
       }
-      if (user?.id) {
-        session.user = user
+      if (token?.user) {
+        session.user = {
+          email: token.user.email,
+          name: token.user.username,
+          id: token.user.id,
+        }
+      }
+      if (token?.user.accessToken) {
+        session.accessToken = token.user.accessToken
       }
       return session
     },

@@ -9,7 +9,10 @@ const NavBar = () => {
       <Link href="/">Eyes On Mars</Link>
       <nav className="flex gap-2 bg-blue-600 text-white">
         {session ? (
-          <Link href="/auth/signout">Sign Out</Link>
+          <>
+            <Link href="/user/profile">Profile</Link>
+            <Link href="/auth/signout">Sign Out</Link>
+          </>
         ) : (
           <>
             <Link href="/auth/signin">Sign In</Link>

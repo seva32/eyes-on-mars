@@ -13,3 +13,16 @@ declare module 'next-auth' {
     }
   }
 }
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    oauthProvider?: string
+    oauthId?: string
+    user?: {
+      id: string
+      email: string
+      username: string
+      accessToken?: string
+    }
+  }
+}
