@@ -38,4 +38,13 @@ model User {
   updatedAt      DateTime        @updatedAt
   profile        Profile?
   favoritePhotos FavoritePhoto[]
+  accounts  Account[]
+}
+
+model Account {
+  id                 String  @id @default(uuid())
+  userId             Int
+  provider           String
+  providerAccountId  String
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

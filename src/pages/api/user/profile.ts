@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import { prisma } from '../../../lib/prisma'
 import { auth } from '../../../utils/auth'
 import { getToken } from 'next-auth/jwt'
 

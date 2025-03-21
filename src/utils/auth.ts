@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import Credentials from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import prisma from '../lib/prisma'
+import { prisma } from '../lib/prisma'
 
 export const nextAuthConfig = {
   adapter: PrismaAdapter(prisma),
@@ -89,7 +89,8 @@ export const nextAuthConfig = {
       }
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
+      console.log('session callback >>>>>>>>>>>>>>>> ', session, token, user)
       if (token?.ouathProvider && token?.oauthId) {
         session.oauthProvider = token.oauthProvider as string
         session.oauthId = token.oauthId as string
