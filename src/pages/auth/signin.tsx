@@ -4,6 +4,7 @@ import Layout from '../../components/Layout'
 import { InputField } from '../../components/common/Input'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
+import Image from 'next/image'
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -117,8 +118,17 @@ function SignIn() {
             {status.loading ? 'Signing in...' : 'Sign In'}
           </Button>
         </div>
-        <p className="mt-5 mb-5">Or</p>
-        <Button variant="secondary" onClick={() => signIn('google')}>
+        <Button
+          variant="secondary"
+          onClick={() => signIn('google')}
+          className="cursor-pointer flex items-center justify-center border-2 border-indigo-800 p-1.5 w-80 rounded-md mt-12"
+        >
+          <Image
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAw1BMVEVHcEz////////9/f39/f79/f33+Pj////b3d74+fny8/P19vYAAAD////w8fH////////9/f3///8+fu7ZRCpBmEtNnVXaTDbbUz79/Pz0uCtIm1EqdO2FqPJplvDqpJ282MDifG87l0DW4fvXOBWqzrDvurbt8v55oPLkjIH00Mx0sHuRvpVpq3BrrHL2wEn51Y/4zHbw6eP4uBf86MP0sw6EpvJEhdRSie50prrFrCrsrqfqkSrssavxrDPP48yyx/Yvv4yqAAAAEnRSTlMAWZFT48ytmAumbmsCSV/Uv52LM4rJAAABN0lEQVQokY2SiXKCMBCGEUHBW5qQhGgRKopn7zq9ff+n6mZLNIAz7T/OZDdf8rO7xrL+p749Gg5Hdv8CsoOT7ApqBCU1TNYOKmrX2DpereJ1hf56LhhhjBHCFqazh0lCOOeMwW8e44Z3Nk0Y52TO+ZyQxDRGT7hH3kUQiDjRRSnWVMEH4+ShUnGzcH16/CKfl9pxYb2LomehNvLp9AWULyF2ATqw3kfRLZ6eXKEmNxA7f0Fti/BaCaC2HWNBUTjThRwBqnWsW3mTIS1aWYJtrlvBIWQ0DCne/T4Un8QhWL6K9hIo3e1pKg+TqdrxjcHv4G4o4YhMX43BW11MspRKKSlNM0y7+g9tYSpm281mO8NJBa3zU2hV52owy+oIE4lO+fl5/gkL36s93N7Adx3H9Qe9GioOlNMflcoty3IDwqwAAAAASUVORK5CYII="
+            alt="Google Logo"
+            width={26}
+            height={26}
+          />
           Sign In with Google
         </Button>
       </div>
