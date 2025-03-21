@@ -48,14 +48,23 @@ export const nextAuthConfig = {
       name: 'Google',
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+          scope: 'openid email profile',
+        },
+      },
       profile(profile) {
         return {
-          id: profile.id as string,
+          id: profile.sub as string,
           name: profile.name as string,
           email: profile.email as string,
           image: profile.picture as string,
         }
       },
+      style: { logo: '/google.svg', bg: '#fff', text: '#000' },
     }),
   ],
   pages: {
@@ -65,6 +74,7 @@ export const nextAuthConfig = {
   },
   callbacks: {
     async jwt({ token, account, user }) {
+      console.log('jwt callback >>>>>>>>>>>>>>>> ', token, account, user)
       if (account) {
         token.oauthProvider = account.provider
         token.oauthId = account.userId
@@ -96,14 +106,21 @@ export const nextAuthConfig = {
       }
       return session
     },
-    // async signIn(all) {
-    //   console.log('Sign in callback', all)
-    //   return true
-    // },
-    // async redirect({ url, baseUrl }) {
-    //   console.log('redirect callback', url, baseUrl)
-    //   return baseUrl
-    // },
+    async redirect({ url, baseUrl }) {
+      const urlObj = new URL(url)
+      const provider = urlObj.searchParams.get('provider')
+      console.log('redirect callback >>>>>>>>>>>>>>>> ', url, baseUrl)
+      if (provider === 'google') {
+        if (url.includes('/auth/error')) {
+          return `${baseUrl}/auth/signin`
+        }
+      }
+      return url.startsWith(baseUrl) ? url : baseUrl
+    },
+    async signIn(all) {
+      console.log('Sign in callback', all)
+      return true
+    },
   },
   session: {
     strategy: 'jwt',
