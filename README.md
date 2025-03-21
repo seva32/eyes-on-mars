@@ -88,3 +88,15 @@ For migrations docker exec to run in nextjs container: yarn run prisma:migrate, 
 In windows create DB in Supabase and use the connexion string in .env.local, in .env.local update DATABASE_URL and comment NEXTAUTH_URLs, then yarn run dev:r (dev is docker-compose)
 
 eyes-on-mars-ds to publish just use npx np --yarn
+
+If next-auth configure session strategy database
+
+```bash
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+```

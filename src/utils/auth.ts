@@ -10,6 +10,8 @@ import Credentials from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import prisma from '../lib/prisma'
 
+const randomId = () => Math.random().toString(36).substring(2, 7)
+
 export const nextAuthConfig = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -74,7 +76,6 @@ export const nextAuthConfig = {
   },
   callbacks: {
     async jwt({ token, account, user }) {
-      console.log('jwt callback >>>>>>>>>>>>>>>> ', token, account, user)
       if (account) {
         token.oauthProvider = account.provider
         token.oauthId = account.userId
@@ -107,18 +108,79 @@ export const nextAuthConfig = {
       return session
     },
     async redirect({ url, baseUrl }) {
-      const urlObj = new URL(url)
-      const provider = urlObj.searchParams.get('provider')
-      console.log('redirect callback >>>>>>>>>>>>>>>> ', url, baseUrl)
-      if (provider === 'google') {
-        if (url.includes('/auth/error')) {
-          return `${baseUrl}/auth/signin`
+      try {
+        const urlObj = new URL(url)
+        const provider = urlObj.searchParams.get('provider')
+        if (provider === 'google') {
+          if (url.includes('/auth/error')) {
+            return `${baseUrl}/auth/signin`
+          }
         }
+        return url.startsWith(baseUrl) ? url : baseUrl
+      } catch (error) {
+        console.error('Invalid URL:', url, error)
+        return baseUrl
       }
-      return url.startsWith(baseUrl) ? url : baseUrl
     },
-    async signIn(all) {
-      console.log('Sign in callback', all)
+    async signIn({ user, account }) {
+      if (account.provider === 'google') {
+        let existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          include: { accounts: true },
+        })
+
+        if (existingUser) {
+          const accountExists = existingUser.accounts.some(
+            (acc) => acc.provider === 'google',
+          )
+
+          if (!accountExists) {
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                provider: 'google',
+                providerAccountId: account.providerAccountId,
+              },
+            })
+          }
+          if (user.image) {
+            await prisma.profile.update({
+              where: { userId: existingUser.id },
+              data: { avatarUrl: user.image },
+            })
+          }
+        } else {
+          // If user doesn't exist, create it
+          const generatedUsername = user.name
+            ? user.name.replace(/\s+/g, '').toLowerCase() + randomId()
+            : 'user' + randomId()
+
+          existingUser = await prisma.user.create({
+            data: {
+              email: user.email,
+              username: generatedUsername,
+              accounts: {
+                create: {
+                  provider: 'google',
+                  providerAccountId: account.providerAccountId,
+                },
+              },
+              profile: {
+                create: {
+                  avatarUrl: user.image,
+                },
+              },
+            },
+            include: {
+              accounts: true,
+              profile: true,
+            },
+          })
+        }
+
+        user.id = existingUser.id.toString()
+      }
+
       return true
     },
   },
