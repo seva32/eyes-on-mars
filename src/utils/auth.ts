@@ -107,12 +107,14 @@ export const nextAuthConfig = {
       return session
     },
     async redirect({ url, baseUrl }) {
-      const urlObj = new URL(url)
-      const provider = urlObj.searchParams.get('provider')
-      console.log('redirect callback >>>>>>>>>>>>>>>> ', url, baseUrl)
-      if (provider === 'google') {
-        if (url.includes('/auth/error')) {
-          return `${baseUrl}/auth/signin`
+      const urlRegex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm
+      if (urlRegex.test(url)) {
+        const urlObj = new URL(url)
+        const provider = urlObj.searchParams.get('provider')
+        if (provider === 'google') {
+          if (url.includes('/auth/error')) {
+            return `${baseUrl}/auth/signin`
+          }
         }
       }
       return url.startsWith(baseUrl) ? url : baseUrl
