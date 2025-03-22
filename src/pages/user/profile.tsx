@@ -31,7 +31,6 @@ const UserProfile = () => {
       fetch('/api/user/profile')
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           const { profile, ...user } = data
           setProfile(profile)
           setUser(user)
@@ -148,6 +147,7 @@ const UserProfile = () => {
       const data = await response.json()
       if (response.ok) {
         setImageUrl(data.url)
+        setProfile({ ...profile!, avatarUrl: data.url })
       } else {
         alert(data.error)
       }
@@ -155,6 +155,7 @@ const UserProfile = () => {
       console.error('Upload error:', error)
     } finally {
       setUploading(false)
+      setIsModalOpen(false)
     }
   }
 
