@@ -85,7 +85,7 @@ If something fails for TypeORM, check the ports in .env and ormconfig.ts
 
 For migrations docker exec to run in nextjs container: yarn run prisma:migrate, or use docker-compose run nextjs yarn run prisma:migrate
 
-In windows create DB in Supabase and use the connexion string in .env.local, in .env.local update DATABASE_URL and comment NEXTAUTH_URLs, then yarn run dev:r (dev is docker-compose)
+In windows create DB in Supabase and use the connexion string in .env.local (direct coneection and session pooler), in .env.local update DATABASE_URL and comment NEXTAUTH_URLs, then yarn run dev:r (dev is docker-compose)
 
 eyes-on-mars-ds to publish just use npx np --yarn
 
@@ -99,4 +99,10 @@ model Session {
   sessionToken String   @unique
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+```
+
+```bash
+npx kill-port 3003
+npx prisma studio
+yarn run prisma:migrate -- --name add_table_x
 ```

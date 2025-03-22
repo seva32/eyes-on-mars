@@ -22,6 +22,7 @@ model Profile {
   id        Int     @id @default(autoincrement())
   avatarUrl String?
   bio       String?
+  name      String?
   planet    String?
   userId    Int     @unique
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
