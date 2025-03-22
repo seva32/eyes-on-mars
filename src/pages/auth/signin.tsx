@@ -10,7 +10,6 @@ function SignIn() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    username: '',
   })
   const [status, setStatus] = useState({
     loading: false,
@@ -25,7 +24,7 @@ function SignIn() {
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { email, password, username } = formData
+    const { email, password } = formData
 
     if (!email || !password) {
       setStatus({ ...status, error: 'Email and password are required.' })
@@ -38,7 +37,6 @@ function SignIn() {
       const response = await signIn('credentials', {
         email,
         password,
-        username,
         redirect: false,
         callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
       })
@@ -91,12 +89,6 @@ function SignIn() {
             value={formData.email}
             onChange={handleChange}
             required
-          />
-          <InputField
-            id="username"
-            label="Username"
-            value={formData.username}
-            onChange={handleChange}
           />
           <InputField
             id="password"

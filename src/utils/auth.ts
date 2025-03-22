@@ -108,17 +108,24 @@ export const nextAuthConfig = {
       return session
     },
     async redirect({ url, baseUrl }) {
+      const urlPattern =
+        /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[\w-./?%&=]*)?$/i
+
+      if (!urlPattern.test(url)) {
+        return baseUrl
+      }
+
       try {
         const urlObj = new URL(url)
         const provider = urlObj.searchParams.get('provider')
-        if (provider === 'google') {
-          if (url.includes('/auth/error')) {
-            return `${baseUrl}/auth/signin`
-          }
+
+        if (provider === 'google' && url.includes('/auth/error')) {
+          return `${baseUrl}/auth/signin`
         }
+
         return url.startsWith(baseUrl) ? url : baseUrl
       } catch (error) {
-        console.error('Invalid URL:', url, error)
+        console.error('Unexpected error processing URL:', url, error)
         return baseUrl
       }
     },

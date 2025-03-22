@@ -29,6 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             avatarUrl: true,
             bio: true,
             planet: true,
+            name: true,
           },
         },
         favoritePhotos: {
