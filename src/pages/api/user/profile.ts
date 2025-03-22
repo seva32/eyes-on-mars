@@ -55,12 +55,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     req.method === 'PUT' ||
     req.method === 'PATCH'
   ) {
-    const { avatarUrl, bio, planet } = req.body
+    const { avatarUrl, bio, planet, name } = req.body
 
     try {
       const profile = await prisma.profile.upsert({
         where: { userId },
-        update: { avatarUrl, bio, planet },
+        update: { avatarUrl, bio, planet, name },
         create: {
           avatarUrl,
           bio,

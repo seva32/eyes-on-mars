@@ -45,7 +45,6 @@ const UserProfile = () => {
   }, [status])
 
   const validateField = (field, value) => {
-    debugger
     const newErrors = { ...errors }
     switch (field) {
       case 'name':
@@ -88,53 +87,36 @@ const UserProfile = () => {
   }
 
   const handleSave = async (field: string) => {
-    const value = Object.hasOwn(profile!, field)
-      ? profile![field]
-      : user![field]
-    debugger
-    if (validateField(field, value)) {
-      setEditStates({ ...editStates, [field]: false })
+    const value = field in profile! ? profile![field] : user![field]
 
-      if (Object.hasOwn(profile!, field)) {
-        try {
-          const response = await fetch('/api/user/profile', {
-            method: 'PATCH',
-            body: JSON.stringify({ [field]: value }),
-          })
+    if (!validateField(field, value)) return
 
-          const data = await response.json()
-          if (response.ok) {
-            setProfile(data.profile)
-          } else {
-            alert(data.error)
-          }
-        } catch (error) {
-          console.error('Upload error:', error)
-        } finally {
-          setUploading(false)
-        }
-      } else if (Object.hasOwn(user!, field)) {
-        try {
-          const response = await fetch('/api/user/user', {
-            method: 'PATCH',
-            body: JSON.stringify({ [field]: value }),
-          })
+    setEditStates((prev) => ({ ...prev, [field]: false }))
 
-          const data = await response.json()
-          if (response.ok) {
-            setUser(data.user)
-          } else {
-            alert(data.error)
-          }
-        } catch (error) {
-          console.error('Upload error:', error)
-        } finally {
-          setUploading(false)
-        }
+    const endpoint = field in profile! ? '/api/user/profile' : '/api/user/user'
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [field]: value }),
+      })
+
+      const data = await response.json()
+      if (!response.ok) {
+        alert(data.error)
+        return
       }
+
+      if (field in profile!) setProfile(data)
+      else setUser(data.user)
       alert(
         `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully`,
       )
+    } catch (error) {
+      console.error('Upload error:', error)
+    } finally {
+      setUploading(false)
     }
   }
 
