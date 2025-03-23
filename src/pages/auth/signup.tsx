@@ -61,7 +61,7 @@ const Signup = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center h-screen px-4">
+      <div className="flex flex-col items-center justify-center w-full px-4 bg-white">
         <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
 
         {status.error && (

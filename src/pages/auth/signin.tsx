@@ -67,7 +67,7 @@ function SignIn() {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center h-screen px-4">
+      <div className="flex flex-col items-center justify-center px-4 bg-white w-full">
         <h1 className="text-2xl font-bold mb-6">Sign In</h1>
 
         {status.error && (
