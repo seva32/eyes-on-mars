@@ -21,17 +21,23 @@ export default function MarsRoverExplorer() {
     {
       name: 'Curiosity',
       landingDate: 'Aug 6, 2012',
-      image: 'https://placehold.co/400x300?text=Curiosity',
+      image:
+        'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/dgotkevm1ecxmzvgeqtb.png',
+      image_fallback: 'https://placehold.co/400x300?text=Curiosity',
     },
     {
       name: 'Opportunity',
       landingDate: 'Jan 25, 2004',
-      image: 'https://placehold.co/400x300?text=Opportunity',
+      image:
+        'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/zdgiw32renqj3vknpypu.png',
+      image_fallback: 'https://placehold.co/400x300?text=Opportunity',
     },
     {
       name: 'Spirit',
       landingDate: 'Jan 4, 2004',
-      image: 'https://placehold.co/400x300?text=Spirit',
+      image:
+        'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/akgb6pu9l1irwqzhycys.png',
+      image_fallback: 'https://placehold.co/400x300?text=Spirit',
     },
   ]
 
