@@ -2,9 +2,24 @@
 import React from 'react'
 // import Image from 'next/image'
 
-interface Photo {
+export interface Photo {
   id: number
-  url: string
+  img_src: string
+  sol: number
+  earth_date: string
+  camera: {
+    name: string
+    id: number
+    rover_id: number
+    full_name: string
+  }
+  rover: {
+    id: number
+    name: string
+    landing_date: string
+    launch_date: string
+    status: string
+  }
 }
 
 interface PhotoGridProps {
@@ -21,7 +36,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
         >
           <img
             className="object-cover w-full h-[200px]"
-            src={photo.url}
+            src={photo.img_src}
             alt={`Mars photo ${photo.id}`}
           />
           <div className="p-4">
