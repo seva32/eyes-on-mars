@@ -5,6 +5,7 @@ import { RoverCard } from '../../components/common/RoverCard'
 import { SearchControls } from '../../components/common/SearchControls'
 import { CameraFilter } from '../../components/common/CameraFilter'
 import { PhotoGrid } from '../../components/common/PhotoGrid'
+import type { Photo } from '../../components/common/PhotoGrid'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 import Layout from '../../components/Layout'
 
@@ -13,7 +14,7 @@ export default function MarsRoverExplorer() {
   const [earthDate, setEarthDate] = useState('')
   const [solDay, setSolDay] = useState('')
   const [selectedCamera, setSelectedCamera] = useState('')
-  const [photos, setPhotos] = useState<{ id: number; url: string }[]>([])
+  const [photos, setPhotos] = useState<Photo[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const rovers = [
@@ -44,18 +45,37 @@ export default function MarsRoverExplorer() {
     'NAVCAM',
   ]
 
-  const filterPhotos = () => {
-    if (!selectedRover || (!earthDate && !solDay)) return
+  const filterPhotos = async () => {
+    if (!selectedRover || (!earthDate && !solDay)) {
+      setPhotos([])
+      return
+    }
     setIsLoading(true)
-    setTimeout(() => {
-      setPhotos(
-        Array.from({ length: 8 }, (_, i) => ({
-          id: i,
-          url: `https://placehold.co/800x600?text=Mars+Photo+${i}`,
-        })),
+
+    try {
+      const response = await fetch(
+        `/api/mars/photos?rover=${selectedRover}&earth_date=${earthDate}&sol=${solDay}`,
       )
+      const data = await response.json()
+
+      if (Array.isArray(data) && data.length > 0) {
+        setPhotos(data)
+      } else {
+        console.error('No photos found or invalid data format')
+        setPhotos([])
+      }
+    } catch (error) {
+      console.error('Error fetching photos', error)
+      setPhotos([])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
+  }
+
+  const searchDisabled = !selectedRover || (!earthDate && !solDay)
+
+  if (searchDisabled && photos.length > 0) {
+    setPhotos([])
   }
 
   return (
@@ -70,19 +90,26 @@ export default function MarsRoverExplorer() {
                 key={rover.name}
                 {...rover}
                 isSelected={selectedRover === rover.name}
-                onSelect={() => setSelectedRover(rover.name)}
+                onSelect={() => {
+                  setSelectedRover(rover.name)
+                  setPhotos([])
+                  setEarthDate('')
+                  setSolDay('')
+                }}
               />
             ))}
           </section>
 
-          <SearchControls
-            earthDate={earthDate}
-            setEarthDate={setEarthDate}
-            solDay={solDay}
-            setSolDay={setSolDay}
-            onSearch={filterPhotos}
-            isDisabled={!selectedRover || (!earthDate && !solDay)}
-          />
+          {selectedRover && (
+            <SearchControls
+              earthDate={earthDate}
+              setEarthDate={setEarthDate}
+              solDay={solDay}
+              setSolDay={setSolDay}
+              onSearch={filterPhotos}
+              isDisabled={searchDisabled}
+            />
+          )}
 
           {photos.length > 0 && (
             <section className="mb-8">

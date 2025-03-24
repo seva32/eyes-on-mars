@@ -19,10 +19,10 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed' })
   }
 
-  const { sol = '1000', camera = '', rover = 'curiosity' } = req.query // Default sol (Mars day) is 1000
+  const { sol, rover, earth_date = '' } = req.query
 
   try {
-    const url = `${NASA_API_URL}/${rover}/photos?sol=${sol}&camera=${camera}&api_key=${API_KEY}`
+    const url = `${NASA_API_URL}/${rover}/photos?${sol ? 'sol=' + sol : 'earth_date=' + earth_date}&api_key=${API_KEY}`
     const response = await fetch(url)
     const data = await response.json()
 
