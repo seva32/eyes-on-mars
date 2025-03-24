@@ -246,7 +246,7 @@ const UserProfile = () => {
 
   return (
     <Layout>
-      <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 w-full">
+      <div className="bg-transparent py-12 px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">
             <div className="flex flex-col md:flex-row gap-8 items-start">
