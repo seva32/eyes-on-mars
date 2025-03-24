@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <NavBar />
       <main className="flex-1 flex w-full p-4">{children}</main>
       <footer className="p-4 text-orange-300 text-center text-xs font-bold">
-        &copy; {currentYear} eyesonmars.com
+        &copy; {currentYear} mars.sfantini.us
       </footer>
     </div>
   )
