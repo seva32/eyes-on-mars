@@ -10,6 +10,7 @@ const NavBar = () => {
       <nav className="flex gap-2 text-white">
         {session ? (
           <>
+            <Link href="/user/photo-explorer">Mars Photo Explorer</Link>
             <Link href="/user/profile">Profile</Link>
             <Link href="/auth/signout">Sign Out</Link>
           </>
