@@ -1,5 +1,6 @@
 'use client'
-import * as React from 'react'
+import Image from 'next/image'
+import React from 'react'
 
 interface RoverCardProps {
   name: string
@@ -24,10 +25,12 @@ export function RoverCard({
         border: isSelected ? '2px solid #FF4D4D' : '2px solid transparent',
       }}
     >
-      <img
+      <Image
         src={image}
         alt={`${name} rover`}
-        className="object-cover w-full rounded-t-2xl h-[200px]"
+        className="object-cover w-full rounded-t-md h-[200px]"
+        width={200}
+        height={200}
       />
       <div className="p-4 bg-zinc-900 h-full">
         <h3 className="text-lg font-semibold">{name}</h3>

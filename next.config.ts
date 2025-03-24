@@ -26,6 +26,20 @@ const nextConfig: NextConfig = {
         pathname: '/photos/**',
         search: '',
       },
+      {
+        protocol: 'http',
+        hostname: 'mars.jpl.nasa.gov',
+        port: '',
+        pathname: '/msl-raw-images/**',
+        search: '',
+      },
+      {
+        protocol: 'http',
+        hostname: 'mars.nasa.gov',
+        port: '',
+        pathname: '/mer/**',
+        search: '',
+      },
     ],
   },
 }
