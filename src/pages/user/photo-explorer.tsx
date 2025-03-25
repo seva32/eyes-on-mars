@@ -8,6 +8,7 @@ import { PhotoGrid } from '../../components/common/PhotoGrid'
 import type { Photo } from '../../components/common/PhotoGrid'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 import Layout from '../../components/Layout'
+import RoverRanges from '../../components/common/RoverRanges'
 
 export default function MarsRoverExplorer() {
   const [selectedRover, setSelectedRover] = useState('')
@@ -117,7 +118,7 @@ export default function MarsRoverExplorer() {
             />
           )}
 
-          {photos.length > 0 && (
+          {photos.length > 0 ? (
             <section className="mb-8">
               <CameraFilter
                 cameras={cameras}
@@ -126,6 +127,8 @@ export default function MarsRoverExplorer() {
               />
               <PhotoGrid photos={photos} />
             </section>
+          ) : (
+            <RoverRanges />
           )}
 
           {isLoading && <LoadingSpinner />}
