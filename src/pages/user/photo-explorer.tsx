@@ -23,6 +23,9 @@ export default function MarsRoverExplorer() {
     {
       name: 'Curiosity',
       landingDate: 'Aug 6, 2012',
+      start: '2012-08-06',
+      end: undefined,
+      maxSol: undefined,
       image:
         'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/dgotkevm1ecxmzvgeqtb.png',
       image_fallback: 'https://placehold.co/400x300?text=Curiosity',
@@ -30,6 +33,9 @@ export default function MarsRoverExplorer() {
     {
       name: 'Opportunity',
       landingDate: 'Jan 25, 2004',
+      start: '2004-01-25',
+      end: '2018-06-10',
+      maxSol: 5111,
       image:
         'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/zdgiw32renqj3vknpypu.png',
       image_fallback: 'https://placehold.co/400x300?text=Opportunity',
@@ -37,6 +43,9 @@ export default function MarsRoverExplorer() {
     {
       name: 'Spirit',
       landingDate: 'Jan 4, 2004',
+      start: '2004-01-04',
+      end: '2010-03-21',
+      maxSol: 2208,
       image:
         'https://res.cloudinary.com/seva32/image/upload/v1742855141/uploads-eom/akgb6pu9l1irwqzhycys.png',
       image_fallback: 'https://placehold.co/400x300?text=Spirit',
@@ -91,6 +100,9 @@ export default function MarsRoverExplorer() {
     ? photos.filter((photo) => photo.camera.name === selectedCamera) || []
     : photos
 
+  const noPhotosFound =
+    selectedRover && searchPerformed && !searchDisabled && !isLoading
+
   return (
     <Layout>
       <main className="flex flex-col p-8 w-screen bg-zinc-950 min-h-[screen] text-zinc-200">
@@ -123,6 +135,13 @@ export default function MarsRoverExplorer() {
               setSolDay={setSolDay}
               onSearch={filterPhotos}
               isDisabled={searchDisabled}
+              maxSol={
+                rovers.find((rover) => rover.name === selectedRover)?.maxSol
+              }
+              start={
+                rovers.find((rover) => rover.name === selectedRover)?.start
+              }
+              end={rovers.find((rover) => rover.name === selectedRover)?.end}
             />
           )}
 
@@ -140,7 +159,7 @@ export default function MarsRoverExplorer() {
             </section>
           ) : (
             <>
-              {selectedRover && searchPerformed && !searchDisabled && (
+              {noPhotosFound && (
                 <p className="mb-4 text-xl font-semibold">
                   No photos found, select a different{' '}
                   {selectedCamera ? 'camera' : 'time or rover'}
