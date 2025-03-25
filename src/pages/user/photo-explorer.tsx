@@ -17,6 +17,7 @@ export default function MarsRoverExplorer() {
   const [selectedCamera, setSelectedCamera] = useState('')
   const [photos, setPhotos] = useState<Photo[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [searchPerformed, setSearchPerformed] = useState(false)
 
   const rovers = [
     {
@@ -58,6 +59,7 @@ export default function MarsRoverExplorer() {
       return
     }
     setIsLoading(true)
+    setSearchPerformed(true)
 
     try {
       const response = await fetch(
@@ -85,6 +87,10 @@ export default function MarsRoverExplorer() {
     setPhotos([])
   }
 
+  const filteredPhotos = selectedCamera
+    ? photos.filter((photo) => photo.camera.name === selectedCamera) || []
+    : photos
+
   return (
     <Layout>
       <main className="flex flex-col p-8 w-screen bg-zinc-950 min-h-[screen] text-zinc-200">
@@ -102,6 +108,8 @@ export default function MarsRoverExplorer() {
                   setPhotos([])
                   setEarthDate('')
                   setSolDay('')
+                  setSearchPerformed(false)
+                  setSelectedCamera('')
                 }}
               />
             ))}
@@ -118,17 +126,28 @@ export default function MarsRoverExplorer() {
             />
           )}
 
-          {photos.length > 0 ? (
+          {selectedRover && (earthDate || solDay) && (
+            <CameraFilter
+              cameras={cameras}
+              selectedCamera={selectedCamera}
+              onSelectCamera={setSelectedCamera}
+            />
+          )}
+
+          {filteredPhotos.length > 0 ? (
             <section className="mb-8">
-              <CameraFilter
-                cameras={cameras}
-                selectedCamera={selectedCamera}
-                onSelectCamera={setSelectedCamera}
-              />
-              <PhotoGrid photos={photos} />
+              <PhotoGrid photos={filteredPhotos} />
             </section>
           ) : (
-            <RoverRanges />
+            <>
+              {selectedRover && searchPerformed && !searchDisabled && (
+                <p className="mb-4 text-xl font-semibold">
+                  No photos found, select a different{' '}
+                  {selectedCamera ? 'camera' : 'time or rover'}
+                </p>
+              )}
+              <RoverRanges />
+            </>
           )}
 
           {isLoading && <LoadingSpinner />}
