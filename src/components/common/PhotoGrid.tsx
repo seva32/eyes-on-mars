@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import PhotoItem from './PhotoItem'
 import { Pagination } from 'eyes-on-mars-ds'
 import { SelectionProvider } from '../../contexts/selectionContext'
+import PhotoSelectionButton from './PhotoSelectionButton'
 
 export interface Photo {
   id: number
@@ -36,10 +37,6 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
     currentPage * pageSize,
   )
 
-  const handleSaveSelectedPhotos = (selectedPhotos) => {
-    console.log('Selected Photos:', selectedPhotos)
-  }
-
   return (
     <SelectionProvider>
       <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
@@ -54,13 +51,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
         onPageChange={setCurrentPage}
         className="mt-4 relative z-50"
       />
-      <button
-        type="button"
-        className="absolute right-10 top-10 text-zinc-200 cursor-pointer"
-        onClick={handleSaveSelectedPhotos}
-      >
-        Save
-      </button>
+      <PhotoSelectionButton photos={photos} />
     </SelectionProvider>
   )
 }
