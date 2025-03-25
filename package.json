@@ -18,7 +18,7 @@
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
     "dayjs": "^1.11.13",
-    "eyes-on-mars-ds": "^0.0.7",
+    "eyes-on-mars-ds": "^0.0.12",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "next": "15.2.1",

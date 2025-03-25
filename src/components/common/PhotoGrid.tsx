@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { Pagination } from 'eyes-on-mars-ds'
 
 export interface Photo {
   id: number
@@ -28,6 +29,12 @@ interface PhotoGridProps {
 
 export function PhotoGrid({ photos }: PhotoGridProps) {
   const [imageSrc, setImageSrc] = useState<{ [key: number]: string }>({})
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 8
+  const paginatedPhotos = photos.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  )
 
   const handleImageError = (id: number) => {
     setImageSrc((prev) => ({
@@ -37,25 +44,34 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
-      {photos.map((photo) => (
-        <article
-          key={photo.id}
-          className="overflow-hidden rounded-xl bg-zinc-600"
-        >
-          <Image
-            className="object-cover w-full h-[200px]"
-            src={imageSrc[photo.id] || photo.img_src}
-            alt={`Mars photo ${photo.id}`}
-            width={150}
-            height={150}
-            onError={() => handleImageError(photo.id)}
-          />
-          <div className="p-4">
-            <p className="text-sm text-gray-400">Photo ID: {photo.id}</p>
-          </div>
-        </article>
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
+        {paginatedPhotos.map((photo) => (
+          <article
+            key={photo.id}
+            className="overflow-hidden rounded-xl bg-zinc-600"
+          >
+            <Image
+              className="object-cover w-full h-[200px]"
+              src={imageSrc[photo.id] || photo.img_src}
+              alt={`Mars photo ${photo.id}`}
+              width={150}
+              height={150}
+              onError={() => handleImageError(photo.id)}
+            />
+            <div className="p-4">
+              <p className="text-sm text-gray-400">Photo ID: {photo.id}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <Pagination
+        totalCount={photos.length}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        className="mt-4 relative z-50"
+      />
+    </>
   )
 }
