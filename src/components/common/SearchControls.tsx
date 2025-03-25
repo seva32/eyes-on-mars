@@ -10,6 +10,9 @@ interface SearchControlsProps {
   setSolDay: (day: string) => void
   onSearch: () => void
   isDisabled: boolean
+  maxSol?: number
+  start?: string
+  end?: string
 }
 
 export function SearchControls({
@@ -19,6 +22,9 @@ export function SearchControls({
   setSolDay,
   onSearch,
   isDisabled,
+  maxSol,
+  start,
+  end,
 }: SearchControlsProps) {
   const [activeTab, setActiveTab] = useState<'earthDate' | 'solDay'>(
     'earthDate',
@@ -83,6 +89,8 @@ export function SearchControls({
             className="p-3 w-full rounded-lg border border-solid bg-zinc-900 border-zinc-800 text-zinc-200"
             value={earthDate}
             onChange={handleChangeEarthDate}
+            min={start}
+            max={end || new Date().toISOString().split('T')[0]}
           />
           {earthDate && (
             <button
@@ -104,6 +112,8 @@ export function SearchControls({
           <input
             id="sol-day"
             type="number"
+            min="0"
+            max={maxSol}
             placeholder="Enter Sol day"
             className="p-3 w-full rounded-lg border border-solid bg-zinc-900 border-zinc-800 text-zinc-200"
             value={solDay}

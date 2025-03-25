@@ -1,7 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import Image from 'next/image'
+import PhotoItem from './PhotoItem'
 import { Pagination } from 'eyes-on-mars-ds'
+import { SelectionProvider } from '../../contexts/selectionContext'
 
 export interface Photo {
   id: number
@@ -28,7 +29,6 @@ interface PhotoGridProps {
 }
 
 export function PhotoGrid({ photos }: PhotoGridProps) {
-  const [imageSrc, setImageSrc] = useState<{ [key: number]: string }>({})
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 8
   const paginatedPhotos = photos.slice(
@@ -36,33 +36,15 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
     currentPage * pageSize,
   )
 
-  const handleImageError = (id: number) => {
-    setImageSrc((prev) => ({
-      ...prev,
-      [id]: 'https://res.cloudinary.com/seva32/image/upload/v1602337986/nyc_fdgbyd.png',
-    }))
+  const handleSaveSelectedPhotos = (selectedPhotos) => {
+    console.log('Selected Photos:', selectedPhotos)
   }
 
   return (
-    <>
+    <SelectionProvider>
       <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
         {paginatedPhotos.map((photo) => (
-          <article
-            key={photo.id}
-            className="overflow-hidden rounded-xl bg-zinc-600"
-          >
-            <Image
-              className="object-cover w-full h-[200px]"
-              src={imageSrc[photo.id] || photo.img_src}
-              alt={`Mars photo ${photo.id}`}
-              width={150}
-              height={150}
-              onError={() => handleImageError(photo.id)}
-            />
-            <div className="p-4">
-              <p className="text-sm text-gray-400">Photo ID: {photo.id}</p>
-            </div>
-          </article>
+          <PhotoItem key={photo.id} photo={photo} />
         ))}
       </div>
       <Pagination
@@ -72,6 +54,13 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
         onPageChange={setCurrentPage}
         className="mt-4 relative z-50"
       />
-    </>
+      <button
+        type="button"
+        className="absolute right-10 top-10 text-zinc-200 cursor-pointer"
+        onClick={handleSaveSelectedPhotos}
+      >
+        Save
+      </button>
+    </SelectionProvider>
   )
 }
