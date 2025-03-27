@@ -4,13 +4,11 @@ import { NavigationLink } from './NavigationLink'
 interface MobileMenuProps {
   isOpen: boolean
   isAuthenticated: boolean
-  onSignOut: () => void
 }
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({
   isOpen,
   isAuthenticated,
-  onSignOut,
 }) => {
   if (!isOpen) return null
 
@@ -27,12 +25,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
           <NavigationLink href="/photos">Photos</NavigationLink>
           <NavigationLink href="/profile">Profile</NavigationLink>
           <NavigationLink href="/about">About</NavigationLink>
-          <button
-            className="text-base font-medium text-left text-gray-400"
-            onClick={onSignOut}
-          >
-            Sign Out
-          </button>
+          <NavigationLink href="/auth/signout">Sign out</NavigationLink>
         </div>
       )}
     </nav>

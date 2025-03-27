@@ -7,7 +7,7 @@ import { CameraFilter } from '../../components/common/CameraFilter'
 import { PhotoGrid } from '../../components/common/PhotoGrid'
 import type { Photo } from '../../components/common/PhotoGrid'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
-import Layout from '../../components/Layout'
+import Layout from '../../components/layout/Layout'
 import RoverRanges from '../../components/common/RoverRanges'
 
 export default function MarsRoverExplorer() {
