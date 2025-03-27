@@ -4,7 +4,11 @@ module.exports = {
     './node_modules/eyes-on-mars-ds/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'], // Add Inter font
+      },
+    },
   },
   plugins: [],
 }

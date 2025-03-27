@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Dropzone } from 'eyes-on-mars-ds'
 import { FiEdit2, FiCheck, FiX, FiCamera } from 'react-icons/fi'
 
-import Layout from '../../components/Layout'
+import Layout from '../../components/layout/Layout'
 
 import type { Profile } from '../../entities/Profile'
 

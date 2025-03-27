@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Button } from 'eyes-on-mars-ds'
-import Layout from '../../components/Layout'
+import Layout from '../../components/layout/Layout'
 
 const ErrorPage = () => {
   const router = useRouter()
