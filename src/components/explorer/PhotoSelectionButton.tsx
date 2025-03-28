@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import { SelectionContext } from '../../contexts/selectionContext'
-import type { Photo } from './PhotoGrid'
+import React from 'react'
+import { usePhotoSelectionContext } from '../../contexts/photoSelectionContext'
+import type { Photo } from './photoExplorer.constants'
 
 interface PhotoSelectionButtonProps {
   photos: Photo[]
 }
 
 function PhotoSelectionButton({ photos }: PhotoSelectionButtonProps) {
-  const { selectedPhotos } = useContext(SelectionContext)
+  const { selectedPhotos, setSelectedPhotos } = usePhotoSelectionContext()
 
   const handleSaveSelectedPhotos = async () => {
     const selectedPhotoData = photos
@@ -19,8 +19,6 @@ function PhotoSelectionButton({ photos }: PhotoSelectionButtonProps) {
         sol: photo.sol,
         rating: 0,
       }))
-
-    console.log('Selected Photos Data:', selectedPhotoData)
 
     try {
       const response = await fetch('/api/mars/favorite', {
@@ -37,6 +35,7 @@ function PhotoSelectionButton({ photos }: PhotoSelectionButtonProps) {
 
       const result = await response.json()
       console.log('Save result:', result)
+      setSelectedPhotos(new Set())
     } catch (error) {
       console.error('Error saving favorite photos:', error)
     }

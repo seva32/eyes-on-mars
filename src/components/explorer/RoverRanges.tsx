@@ -18,10 +18,10 @@ const data = [
   },
 ]
 
-const MarsRoverChart = () => {
+const RoverRanges = () => {
   return (
     <div className="w-full max-w-2xl mx-auto font-sans p-4">
-      <h2 className="text-center text-xl font-bold mb-4">
+      <h2 className="text-center text-xl font-bold mb-4 text-white">
         Mars Rover Mission Timelines
       </h2>
       <div className="overflow-x-auto rounded-md">
@@ -48,4 +48,4 @@ const MarsRoverChart = () => {
   )
 }
 
-export default MarsRoverChart
+export default RoverRanges
