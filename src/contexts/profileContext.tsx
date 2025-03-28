@@ -111,7 +111,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         const response = await fetch(endpoint, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ [field]: value }),
+          body: JSON.stringify({ [field]: fieldValue }),
         })
 
         const data = await response.json()
