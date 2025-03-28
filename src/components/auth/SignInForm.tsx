@@ -1,14 +1,15 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { InputField } from './InputField'
 import { PasswordInput } from './PasswordInput'
 import { Divider } from './Divider'
 import { GoogleButton } from './GoogleButton'
 import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function SignUpForm() {
+  const { status: sessionStatus } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +20,12 @@ export default function SignUpForm() {
     success: '',
   })
   const router = useRouter()
+
+  useEffect(() => {
+    if (sessionStatus === 'authenticated') {
+      router.push('/user/profile')
+    }
+  }, [sessionStatus, router])
 
   const handleChange = (e) => {
     if (status.error) {
@@ -77,7 +84,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <main className="flex justify-center items-center w-screen bg-zinc-950 min-h-[screen]">
+    <main className="flex justify-center items-center w-full bg-zinc-950 flex-grow">
       <section className="p-8 rounded-xl border bg-zinc-900 border-zinc-800 w-[420px]">
         <h1 className="mb-6 text-2xl font-semibold text-zinc-200">
           Enter to your account

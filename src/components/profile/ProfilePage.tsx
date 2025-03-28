@@ -41,7 +41,7 @@ const ProfilePage = () => {
   }, [status, setUser, setProfile])
 
   const ProfileWrapper = ({ children }) => (
-    <main className="min-h-screen bg-[#0A0A0F] text-[#E5E5E7]">
+    <main className="bg-[#0A0A0F] text-[#E5E5E7] flex-grow">
       <div className="max-w-[1200px]">
         <article className="bg-[#1A1A1F] rounded-[16px] border-[1px] border-[#333] overflow-hidden">
           {children}
