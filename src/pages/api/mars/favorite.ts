@@ -56,5 +56,33 @@ export default async function handler(
     }
   }
 
+  if (req.method === 'DELETE') {
+    try {
+      const { id } = req.body
+
+      if (!id) {
+        return res
+          .status(400)
+          .json({ message: 'ID is required in the request body' })
+      }
+
+      const deletedPhoto = await prisma.favoritePhoto.delete({
+        where: {
+          id: parseInt(id, 10),
+        },
+      })
+
+      return res.status(200).json({
+        data: deletedPhoto,
+        message: 'Favorite photo deleted successfully',
+      })
+    } catch (error) {
+      console.error('Error deleting favorite photo:', error)
+      return res
+        .status(500)
+        .json({ message: 'Internal Server Error: delete favorite' })
+    }
+  }
+
   res.status(405).json({ message: 'Method Not Allowed' })
 }

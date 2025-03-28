@@ -4,7 +4,7 @@ import { RoverCard } from './RoverCard'
 import { SearchFilters } from './SearchFilters'
 import { CameraStats } from './CameraStats'
 import { PhotoGrid } from './PhotoGrid'
-import { LoadingSpinner } from './LoadingSpinner'
+import { LoadingSpinner } from '../common/LoadingSpinner'
 import { rovers } from './photoExplorer.constants'
 import {
   PhotoExplorerProvider,

@@ -25,6 +25,9 @@ export const Header: React.FC = () => {
               <NavigationLink href="/user/photo-explorer">
                 Photo Explorer
               </NavigationLink>
+              <NavigationLink href="/user/saved-snaps">
+                Saved Snaps
+              </NavigationLink>
               <NavigationLink href="/user/profile">Profile</NavigationLink>
               <NavigationLink href="/about">About</NavigationLink>
             </div>
