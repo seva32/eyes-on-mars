@@ -45,9 +45,6 @@ export const SegmentedControl: React.FC = () => {
           />
         ))}
       </div>
-      {/* <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-      `}</style> */}
     </section>
   )
 }
