@@ -84,7 +84,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <main className="flex justify-center items-center w-screen bg-zinc-950 min-h-screen">
+    <main className="flex justify-center items-center w-full bg-zinc-950 flex-grow">
       <section className="p-8 rounded-xl border bg-zinc-900 border-zinc-800 w-[420px]">
         <h1 className="mb-6 text-2xl font-semibold text-zinc-200">
           Enter to your account
