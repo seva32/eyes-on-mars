@@ -1,16 +1,19 @@
-'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useProfile } from '../../contexts/profileContext'
 import { FiCheck, FiX } from 'react-icons/fi'
 
 export const Bio: React.FC = () => {
-  const { profile, handleCancel, handleChange, handleEdit, editStates } =
+  const { profile, handleEdit, handleSave, handleCancel, editStates } =
     useProfile()
-  const [bio, setBio] = useState(profile?.bio || '')
+  const [localBio, setLocalBio] = useState(profile?.bio || '')
 
-  React.useEffect(() => {
-    setBio(profile?.bio || '')
+  useEffect(() => {
+    setLocalBio(profile?.bio || '')
   }, [profile?.bio])
+
+  const saveBio = () => {
+    handleSave('bio', localBio)
+  }
 
   return (
     <section className="bg-[#252529] p-6 rounded-[12px] border-[1px] border-[#333] h-fit">
@@ -18,7 +21,7 @@ export const Bio: React.FC = () => {
       {!editStates.bio ? (
         <div className="flex items-start gap-2">
           <p className="text-[16px] leading-relaxed flex-grow">
-            {profile?.bio}
+            {profile?.bio || 'No bio available'}
           </p>
           <button
             onClick={() => handleEdit('bio')}
@@ -42,14 +45,12 @@ export const Bio: React.FC = () => {
         <div className="flex items-center gap-2">
           <textarea
             autoFocus
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            value={localBio}
+            onChange={(e) => setLocalBio(e.target.value)}
             className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 w-full min-h-[100px] text-[16px] focus:outline-none focus:border-[#FF4D4D]"
           />
           <button
-            onClick={() => {
-              handleChange('bio', bio)
-            }}
+            onClick={saveBio}
             className="p-2 text-green-600 hover:bg-green-50 rounded-full transition-colors"
           >
             <FiCheck size={20} />
