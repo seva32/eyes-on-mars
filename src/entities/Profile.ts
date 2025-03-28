@@ -6,4 +6,5 @@ export class Profile implements IProfile {
   avatarUrl?: string
   bio?: string
   user!: IUser
+  name?: string
 }

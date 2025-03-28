@@ -23,7 +23,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
       ) : (
         <div className="flex flex-col gap-6 p-6">
           <NavigationLink href="/photos">Photos</NavigationLink>
-          <NavigationLink href="/profile">Profile</NavigationLink>
+          <NavigationLink href="/user/profile">Profile</NavigationLink>
           <NavigationLink href="/about">About</NavigationLink>
           <NavigationLink href="/auth/signout">Sign out</NavigationLink>
         </div>

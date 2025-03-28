@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
           ) : (
             <div className="flex gap-8 items-center max-sm:hidden">
               <NavigationLink href="/photos">Photos</NavigationLink>
-              <NavigationLink href="/profile">Profile</NavigationLink>
+              <NavigationLink href="/user/profile">Profile</NavigationLink>
               <NavigationLink href="/about">About</NavigationLink>
             </div>
           )}

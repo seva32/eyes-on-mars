@@ -1,42 +1,28 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
+import { useProfile } from '../../contexts/profileContext'
+import { FiCheck, FiX } from 'react-icons/fi'
 
-interface ProfileInfoProps {
-  name: string
-  username: string
-  onUpdate: (field: 'name' | 'username', value: string) => void
-}
-
-export const ProfileInfo: React.FC<ProfileInfoProps> = ({
-  name,
-  username,
-  onUpdate,
-}) => {
-  const [editing, setEditing] = useState({
-    name: false,
-    username: false,
-  })
-
-  const startEdit = (field: 'name' | 'username') => {
-    setEditing(() => ({
-      name: false,
-      username: false,
-      [field]: true,
-    }))
-  }
-
-  const handleSave = (field: 'name' | 'username', value: string) => {
-    onUpdate(field, value)
-    setEditing((prev) => ({ ...prev, [field]: false }))
-  }
+export const ProfileInfo: React.FC = () => {
+  const {
+    profile,
+    user,
+    handleCancel,
+    handleChange,
+    handleSave,
+    editStates,
+    handleEdit,
+  } = useProfile()
 
   return (
     <div className="space-y-2">
-      {!editing.name ? (
+      {!editStates.name ? (
         <div className="flex items-center gap-2">
-          <h1 className="text-[24px] font-semibold">{name}</h1>
+          <h1 className="text-[24px] font-semibold">
+            {profile?.name || 'User'}
+          </h1>
           <button
-            onClick={() => startEdit('name')}
+            onClick={() => handleEdit('name')}
             className="text-[#9CA3AF] hover:text-white"
           >
             <svg
@@ -54,20 +40,34 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({
           </button>
         </div>
       ) : (
-        <input
-          type="text"
-          defaultValue={name}
-          onBlur={(e) => handleSave('name', e.target.value)}
-          autoFocus
-          className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 text-[24px] font-semibold focus:outline-none focus:border-[#FF4D4D]"
-        />
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={profile?.name}
+            onChange={(e) => handleChange('name', e.target.value)}
+            autoFocus
+            className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 text-[24px] font-semibold focus:outline-none focus:border-[#FF4D4D]"
+          />
+          <button
+            onClick={() => handleSave('name')}
+            className="p-2 text-green-600 hover:bg-green-50 rounded-full transition-colors"
+          >
+            <FiCheck size={20} />
+          </button>
+          <button
+            onClick={() => handleCancel('name')}
+            className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+          >
+            <FiX size={20} />
+          </button>
+        </div>
       )}
 
-      {!editing.username ? (
+      {!editStates.username ? (
         <div className="flex items-center gap-2">
-          <p className="text-[16px] text-[#9CA3AF]">@{username}</p>
+          <p className="text-[16px] text-[#9CA3AF]">@{user?.username}</p>
           <button
-            onClick={() => startEdit('username')}
+            onClick={() => handleEdit('username')}
             className="text-[#9CA3AF] hover:text-white"
           >
             <svg
@@ -85,13 +85,27 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({
           </button>
         </div>
       ) : (
-        <input
-          type="text"
-          defaultValue={username}
-          onBlur={(e) => handleSave('username', e.target.value)}
-          autoFocus
-          className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 text-[16px] focus:outline-none focus:border-[#FF4D4D]"
-        />
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={user?.username}
+            onChange={(e) => handleChange('username', e.target.value)}
+            autoFocus
+            className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 text-[16px] focus:outline-none focus:border-[#FF4D4D]"
+          />
+          <button
+            onClick={() => handleSave('username')}
+            className="p-2 text-green-600 hover:bg-green-50 rounded-full transition-colors"
+          >
+            <FiCheck size={20} />
+          </button>
+          <button
+            onClick={() => handleCancel('username')}
+            className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+          >
+            <FiX size={20} />
+          </button>
+        </div>
       )}
     </div>
   )
