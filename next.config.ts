@@ -2,7 +2,7 @@ import 'dotenv/config'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // reactStrictMode: true,
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
         hostname: 'mars.nasa.gov',
         port: '',
         pathname: '/mer/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
         search: '',
       },
     ],

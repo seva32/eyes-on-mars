@@ -1,16 +1,17 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
+import { useProfile } from '../../contexts/profileContext'
+import { FiCheck, FiX } from 'react-icons/fi'
 
-interface ContactInfoProps {
-  email: string
-  onUpdateEmail: (value: string) => void
-}
-
-export const ContactInfo: React.FC<ContactInfoProps> = ({
-  email,
-  onUpdateEmail,
-}) => {
-  const [isEditing, setIsEditing] = useState(false)
+export const ContactInfo: React.FC = () => {
+  const {
+    user,
+    handleCancel,
+    handleChange,
+    handleSave,
+    editStates,
+    handleEdit,
+  } = useProfile()
 
   return (
     <section className="bg-[#252529] p-6 rounded-[12px] border-[1px] border-[#333]">
@@ -18,11 +19,11 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({
       <div className="space-y-4">
         <div>
           <label className="text-[14px] text-[#9CA3AF] block mb-1">Email</label>
-          {!isEditing ? (
+          {!editStates.email ? (
             <div className="flex items-center gap-2">
-              <p className="text-[16px]">{email}</p>
+              <p className="text-[16px]">{user?.email}</p>
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={() => handleEdit('email')}
                 className="text-[#9CA3AF] hover:text-white"
               >
                 <svg
@@ -40,27 +41,38 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({
               </button>
             </div>
           ) : (
-            <input
-              type="email"
-              defaultValue={email}
-              onBlur={(e) => {
-                onUpdateEmail(e.target.value)
-                setIsEditing(false)
-              }}
-              autoFocus
-              className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 w-full text-[16px] focus:outline-none focus:border-[#FF4D4D]"
-            />
+            <div className="flex items-center gap-2">
+              <input
+                type="email"
+                value={user?.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                autoFocus
+                className="bg-[#1A1A1F] border border-[#333] rounded-[8px] px-3 py-2 w-full text-[16px] focus:outline-none focus:border-[#FF4D4D]"
+              />
+              <button
+                onClick={() => handleSave('email')}
+                className="p-2 text-green-600 hover:bg-green-50 rounded-full transition-colors"
+              >
+                <FiCheck size={20} />
+              </button>
+              <button
+                onClick={() => handleCancel('email')}
+                className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+              >
+                <FiX size={20} />
+              </button>
+            </div>
           )}
         </div>
         <div>
           <label className="text-[14px] text-[#9CA3AF] block mb-1">Role</label>
-          <p className="text-[16px]">Mission Specialist</p>
+          <p className="text-[16px]">---</p>
         </div>
         <div>
           <label className="text-[14px] text-[#9CA3AF] block mb-1">
             Location
           </label>
-          <p className="text-[16px]">Mission Control, Houston</p>
+          <p className="text-[16px]">---</p>
         </div>
       </div>
     </section>
