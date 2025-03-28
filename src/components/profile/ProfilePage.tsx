@@ -28,6 +28,9 @@ const ProfilePage = () => {
       fetch('/api/user/profile')
         .then((res) => res.json())
         .then((data) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log(data)
+          }
           const { profile, ...user } = data
           setProfile(profile)
           setUser(user)

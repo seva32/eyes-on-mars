@@ -23,6 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         id: true,
         username: true,
         email: true,
+        createdAt: true,
         profile: {
           select: {
             id: true,
