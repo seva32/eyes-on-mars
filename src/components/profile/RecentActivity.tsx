@@ -20,7 +20,7 @@ export const RecentActivity = () => {
         </svg>
       ),
       title: 'Analyzed new photos',
-      time: '2 hours ago',
+      time: '---',
     },
     {
       icon: (
@@ -38,7 +38,7 @@ export const RecentActivity = () => {
         </svg>
       ),
       title: 'Added new comment',
-      time: '5 hours ago',
+      time: '---',
     },
     {
       icon: (
@@ -56,7 +56,7 @@ export const RecentActivity = () => {
         </svg>
       ),
       title: 'Marked favorite photo',
-      time: '8 hours ago',
+      time: '---',
     },
   ]
 

@@ -28,6 +28,7 @@ const ProfilePage = () => {
       fetch('/api/user/profile')
         .then((res) => res.json())
         .then((data) => {
+          console.log(data)
           const { profile, ...user } = data
           setProfile(profile)
           setUser(user)
