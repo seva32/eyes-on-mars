@@ -22,7 +22,10 @@ interface ProfileContextType {
   setProfile: React.Dispatch<React.SetStateAction<Profile | null>>
   setUser: React.Dispatch<React.SetStateAction<User | null>>
   handleEdit: (field: keyof EditStates) => void
-  handleSave: (field: keyof Profile | keyof User) => Promise<void>
+  handleSave: (
+    field: keyof Profile | keyof User,
+    value?: string,
+  ) => Promise<void>
   handleCancel: (field: keyof EditStates) => void
   handleChange: (field: keyof Profile | keyof User, value: string) => void
 }
@@ -88,16 +91,17 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const handleSave = React.useCallback(
-    async (field: keyof Profile | keyof User, bioValue?: string) => {
+    async (field: keyof Profile | keyof User, value?: string) => {
       if (!profile || !user) return
 
-      const value = bioValue
-        ? bioValue
-        : field in profile
-          ? profile[field as keyof Profile]
-          : user[field as keyof User]
+      const fieldValue =
+        value !== undefined
+          ? value
+          : field in profile
+            ? profile[field as keyof Profile]
+            : user[field as keyof User]
 
-      if (!validateField(field, value as string)) return
+      if (!validateField(field, fieldValue as string)) return
 
       setEditStates((prev) => ({ ...prev, [field]: false }))
 
@@ -107,7 +111,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         const response = await fetch(endpoint, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ [field]: value }),
+          body: JSON.stringify({ [field]: fieldValue }),
         })
 
         const data = await response.json()
@@ -138,17 +142,19 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const handleChange = React.useCallback(
     (field: keyof Profile | keyof User, value: string) => {
+      if (field === 'bio') {
+        return
+      }
+
       if (profile && field in profile) {
         setProfile((prev) => (prev ? { ...prev, [field]: value } : null))
-        if (field === 'bio') {
-          handleSave('bio', value)
-        }
       } else if (user && field in user) {
         setUser((prev) => (prev ? { ...prev, [field]: value } : null))
       }
+
       validateField(field, value)
     },
-    [profile, user, validateField, handleSave],
+    [profile, user, validateField],
   )
 
   const contextValue = React.useMemo(
