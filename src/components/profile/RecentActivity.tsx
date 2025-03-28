@@ -20,7 +20,7 @@ export const RecentActivity = () => {
         </svg>
       ),
       title: 'Analyzed new photos',
-      time: '---',
+      time: 'Time not available',
     },
     {
       icon: (
