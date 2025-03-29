@@ -14,7 +14,7 @@ export const GridBackground: React.FC = () => {
           strokeWidth="0.3"
         />
       </pattern>
-      <rect width="100" height="100" fill="url(#grid)" />
+      <rect x="1" y="1" width="98" height="98" fill="url(#grid)" />
     </svg>
   )
 }

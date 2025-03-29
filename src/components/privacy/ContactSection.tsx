@@ -10,7 +10,7 @@ export function ContactSection() {
       </p>
       <div className="mt-3">
         <a href="mailto:privacy@example.com" className="text-red-500 underline">
-          privacy@example.com
+          hello@sfantini.us
         </a>
       </div>
     </section>

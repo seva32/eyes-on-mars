@@ -40,7 +40,7 @@ export const TermsOfUse: React.FC = () => {
 
   return (
     <>
-      <main className="flex flex-col p-8 w-screen bg-zinc-950 min-h-[screen] text-zinc-200">
+      <main className="flex flex-col p-8 w-full bg-zinc-950 text-zinc-200">
         <div className="mx-auto w-full max-w-[800px]">
           <header>
             <h1 className="mb-8 text-3xl font-bold">Terms of Use</h1>

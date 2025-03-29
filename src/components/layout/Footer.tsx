@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { NavigationLink } from './NavigationLink'
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
@@ -15,35 +16,44 @@ export const Footer: React.FC = () => {
           <section className="flex flex-col gap-4">
             <h4 className="text-base font-semibold text-zinc-200">Explore</h4>
             <nav className="flex flex-col gap-3">
-              <a
+              <NavigationLink
                 href="https://science.nasa.gov/mission/mars-2020-perseverance/"
                 className="text-sm text-gray-400"
               >
                 Rovers
-              </a>
-              <a href="/photos" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink
+                href="/user/photo-explorer"
+                className="text-sm text-gray-400"
+              >
                 Photos
-              </a>
-              <a href="/about" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink href="/about" className="text-sm text-gray-400">
                 About
-              </a>
+              </NavigationLink>
             </nav>
           </section>
           <section className="flex flex-col gap-4">
             <h4 className="text-base font-semibold text-zinc-200">Resources</h4>
             <nav className="flex flex-col gap-3">
-              <a href="/api" className="text-sm text-gray-400">
+              <NavigationLink
+                href="/api-reference"
+                className="text-sm text-gray-400"
+              >
                 API
-              </a>
-              <a href="/docs" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink href="/docs" className="text-sm text-gray-400">
                 Documentation
-              </a>
-              <a href="/help" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink
+                href="https://sfantini.us"
+                className="text-sm text-gray-400"
+              >
                 Help Center
-              </a>
-              <a href="/terms" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink href="/terms" className="text-sm text-gray-400">
                 Terms of Use
-              </a>
+              </NavigationLink>
             </nav>
           </section>
           <section className="flex flex-col gap-4">
@@ -70,12 +80,12 @@ export const Footer: React.FC = () => {
               © {currentYear} Eyes on Mars. All rights reserved.
             </p>
             <div className="flex gap-6 items-center ml-auto max-sm:ml-0">
-              <a href="/privacy" className="text-sm text-gray-400">
+              <NavigationLink href="/privacy" className="text-sm text-gray-400">
                 Privacy Policy
-              </a>
-              <a href="/terms" className="text-sm text-gray-400">
+              </NavigationLink>
+              <NavigationLink href="/terms" className="text-sm text-gray-400">
                 Terms of Service
-              </a>
+              </NavigationLink>
             </div>
           </div>
         </div>

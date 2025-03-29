@@ -27,7 +27,7 @@ export default function ApiReference() {
   }, [copyEndpoint])
 
   return (
-    <main className="flex flex-col min-h-screen w-screen bg-[#0A0A0F]">
+    <main className="flex flex-col w-full bg-[#0A0A0F]">
       <div className="w-full max-w-[1200px] mx-auto p-8">
         <header className="mb-12">
           <h1 className="text-[32px] font-bold text-[#E5E5E7]">
