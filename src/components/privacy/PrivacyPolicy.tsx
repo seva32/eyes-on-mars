@@ -7,7 +7,7 @@ import { UpdateSection } from './UpdateSection'
 
 export default function PrivacyPolicy() {
   return (
-    <main className="flex flex-col p-8 w-screen bg-zinc-950 min-h-[screen] text-zinc-200">
+    <main className="flex flex-col p-8 w-full bg-zinc-950 text-zinc-200">
       <article className="mx-auto w-full max-w-[800px]">
         <h1 className="mb-8 text-3xl font-bold">Privacy Policy</h1>
         <div className="flex flex-col gap-8">
@@ -63,14 +63,6 @@ export default function PrivacyPolicy() {
           <UpdateSection />
         </div>
       </article>
-      <div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html:
-              '<link href=&quot;https://fonts.googleapis.com/css2?family=Inter&display=swap&quot; rel=&quot;stylesheet&quot;>',
-          }}
-        />
-      </div>
     </main>
   )
 }
