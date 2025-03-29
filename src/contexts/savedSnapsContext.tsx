@@ -47,7 +47,7 @@ export const SavedSnapsProvider = ({ children }: { children: ReactNode }) => {
 export const useSavedSnaps = () => {
   const context = useContext(SavedSnapsContext)
   if (!context) {
-    throw new Error('useSavedPhotos must be used within a SavedPhotosProvider')
+    throw new Error('useSavedSnaps must be used within a SavedSnapsProvider')
   }
   return context
 }
