@@ -5,6 +5,7 @@ import { MdClear, MdInfoOutline } from 'react-icons/md'
 import { usePhotoExplorer } from '../../contexts/photoExplorerContext'
 import { rovers } from './photoExplorer.constants'
 import RoverRanges from './RoverRanges'
+import { Button } from 'eyes-on-mars-ds'
 
 interface SearchFiltersProps {
   onSearch: () => void
@@ -56,32 +57,26 @@ export function SearchFilters({ onSearch }: SearchFiltersProps) {
   return (
     <section className="flex flex-col gap-4 mb-8 w-96 m-auto">
       <div className="flex gap-1">
-        <button
-          className={`py-0.5 font-semibold rounded-md flex-1 border-red-500 border-4 cursor-pointer ${
-            activeTab === 'earthDate'
-              ? 'bg-red-500 text-white'
-              : 'bg-red-100 text-red-400'
-          }`}
+        <Button
+          className="flex-1"
           onClick={() => {
             handleClearSolDay()
             setActiveTab('earthDate')
           }}
+          variant={activeTab === 'earthDate' ? 'filled' : 'outline'}
         >
           Earth Date
-        </button>
-        <button
-          className={`py-0.5 font-semibold rounded-md flex-1 border-red-500 border-4 cursor-pointer ${
-            activeTab === 'solDay'
-              ? 'bg-red-500 text-white'
-              : 'bg-red-100 text-red-400'
-          }`}
+        </Button>
+        <Button
+          className="flex-1"
           onClick={() => {
             handleClearEarthDate()
             setActiveTab('solDay')
           }}
+          variant={activeTab === 'solDay' ? 'filled' : 'outline'}
         >
           Sol Day
-        </button>
+        </Button>
       </div>
 
       {activeTab === 'earthDate' && (
