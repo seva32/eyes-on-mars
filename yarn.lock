@@ -1945,10 +1945,10 @@ eventemitter3@^5.0.1:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
   integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
 
-eyes-on-mars-ds@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/eyes-on-mars-ds/-/eyes-on-mars-ds-0.0.12.tgz#e49e4b3447c0b245bcd939951eea49786029dcca"
-  integrity sha512-ynqw9+T0Fjw9HnPj9FwYpsr0jnUZGOf33QOncmAJBOrJzoMzn7XiyoO43btIiiO7Y0BBm3fskcJWMYLqYUyZmA==
+eyes-on-mars-ds@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/eyes-on-mars-ds/-/eyes-on-mars-ds-0.0.13.tgz#dfa03d08a4a2ace82ac27d4ecc0c8d5ebedff408"
+  integrity sha512-mbpz3EqYO+M2vrZ7iml1kt6hlYebDgY53OsC7OVpvKeW/BamVgZPUbXgYSBASllsrfDhlaf1pNwTI3JQ070yXg==
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"

@@ -4,6 +4,7 @@ import * as React from 'react'
 import { EndpointCard } from './EndpointCard'
 import { ParameterTable } from './ParameterTable'
 import { CameraList } from './CameraList'
+import { Button } from 'eyes-on-mars-ds'
 
 interface ApiSectionProps {
   currentSection: string | null
@@ -28,12 +29,13 @@ export function ApiSection({ currentSection, onCopy }: ApiSectionProps) {
       </p>
       <div className="bg-[#0A0A0F] rounded-[8px] p-4 font-mono text-[14px] text-[#E5E5E7] flex items-center justify-between">
         <code>Authorization: Bearer YOUR_API_KEY</code>
-        <button
-          className="px-3 py-1 bg-[#333] rounded-[4px] text-[12px] hover:bg-[#444] cursor-pointer"
+        <Button
+          variant="secondary"
+          size="xs"
           onClick={() => onCopy('Authorization: Bearer YOUR_API_KEY')}
         >
           Copy
-        </button>
+        </Button>
       </div>
     </section>
   )
@@ -102,12 +104,13 @@ export function ApiSection({ currentSection, onCopy }: ApiSectionProps) {
         <code className="text-[#E5E5E7] font-mono text-[14px]">
           /api/v1/rovers/:id/photos
         </code>
-        <button
-          className="ml-auto px-3 py-1 bg-[#333] rounded-[4px] text-[12px] text-[#E5E5E7]"
+        <Button
+          variant="secondary"
+          size="xs"
           onClick={() => onCopy('/api/v1/rovers/:id/photos')}
         >
           Copy
-        </button>
+        </Button>
       </div>
       <p className="text-[#9CA3AF] text-[14px] mb-6">
         Returns photos taken by a specific rover.

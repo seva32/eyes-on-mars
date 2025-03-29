@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Button } from 'eyes-on-mars-ds'
 
 interface EndpointCardProps {
   method: string
@@ -24,12 +25,9 @@ export function EndpointCard({
           {method}
         </span>
         <code className="text-[#E5E5E7] font-mono text-[14px]">{endpoint}</code>
-        <button
-          className="ml-auto px-3 py-1 bg-[#333] rounded-[4px] text-[12px] text-[#E5E5E7]"
-          onClick={() => onCopy(endpoint)}
-        >
+        <Button variant="secondary" size="xs" onClick={() => onCopy(endpoint)}>
           Copy
-        </button>
+        </Button>
       </div>
       <p className="text-[#9CA3AF] text-[14px] mb-6">{description}</p>
       {response && (
