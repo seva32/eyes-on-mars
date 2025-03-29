@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { FiMaximize2 } from 'react-icons/fi'
 import { MdDelete } from 'react-icons/md'
 import Image from 'next/image'
+import { useSavedSnaps } from '../../contexts/savedSnapsContext'
 
 interface PhotoCardProps {
   id: number
@@ -13,6 +14,7 @@ interface PhotoCardProps {
 function PhotoCard({ id, image, camera }: PhotoCardProps) {
   const [imageSrc, setImageSrc] = useState(image)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { deletePhoto } = useSavedSnaps()
 
   const handleImageError = () => {
     setImageSrc(
@@ -22,21 +24,9 @@ function PhotoCard({ id, image, camera }: PhotoCardProps) {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch('/api/mars/favorite', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to save favorite photos')
-      }
-
-      await response.json()
+      await deletePhoto(id)
     } catch (error) {
-      console.error('Error deleting favorite photo:', error)
+      console.error('Error deleting photo:', error)
     }
   }
 

@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { PhotoGrid } from './PhotoGrid'
 import { LoadingSpinner } from '../common/LoadingSpinner'
 import { useSession } from 'next-auth/react'
-import { FavoritePhoto } from '../../entities/FavoritePhoto'
+import {
+  SavedSnapsProvider,
+  useSavedSnaps,
+} from '../../contexts/savedSnapsContext'
 
 function SavedSnaps() {
   const { status } = useSession()
   const [isLoading, setIsLoading] = useState(false)
-  const [photos, setPhotos] = useState<FavoritePhoto[]>([])
+  const { photos, setPhotos } = useSavedSnaps()
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -25,7 +28,7 @@ function SavedSnaps() {
           setIsLoading(false)
         })
     }
-  }, [status])
+  }, [status, setPhotos])
 
   if (status === 'unauthenticated') {
     return null
@@ -55,4 +58,10 @@ function SavedSnaps() {
   )
 }
 
-export default SavedSnaps
+export default function SavedSnapsPage() {
+  return (
+    <SavedSnapsProvider>
+      <SavedSnaps />
+    </SavedSnapsProvider>
+  )
+}
