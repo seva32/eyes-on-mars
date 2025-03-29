@@ -17,8 +17,8 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
       {!isAuthenticated ? (
         <div className="flex flex-col gap-6 p-6">
           <NavigationLink href="/about">About</NavigationLink>
-          <NavigationLink href="/signin">Sign In</NavigationLink>
-          <NavigationLink href="/signup">Sign Up</NavigationLink>
+          <NavigationLink href="/auth/signin">Sign In</NavigationLink>
+          <NavigationLink href="/auth/signup">Sign Up</NavigationLink>
         </div>
       ) : (
         <div className="flex flex-col gap-6 p-6">

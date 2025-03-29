@@ -3,9 +3,9 @@ import React from 'react'
 import { MissionOverview } from './MissionOverview'
 import { FeatureCard } from './FeatureCard'
 
-export const MarsPhotoExplorer: React.FC = () => {
+export const About: React.FC = () => {
   return (
-    <main className="min-h-screen w-screen bg-[#0A0A0F] p-8 font-[Inter]">
+    <main className="min-h-screen w-screen bg-[#0A0A0F] p-8">
       <article className="max-w-[1200px] mx-auto">
         <h1 className="text-[32px] font-bold text-[#E5E5E7] mb-8">
           About Mars Photo Explorer
@@ -34,4 +34,4 @@ export const MarsPhotoExplorer: React.FC = () => {
   )
 }
 
-export default MarsPhotoExplorer
+export default About
