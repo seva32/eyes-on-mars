@@ -137,8 +137,8 @@ export const nextAuthConfig = {
         })
 
         if (existingUser) {
-          const accountExists = existingUser.accounts.some(
-            (acc) => acc.provider === 'google',
+          const accountExists: boolean = existingUser.accounts.some(
+            (acc: { provider: string }) => acc.provider === 'google',
           )
 
           if (!accountExists) {

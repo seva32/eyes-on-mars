@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 import prisma from '../../../lib/prisma'
-import { Prisma } from '@prisma/client'
 import { auth } from '../../../utils/auth'
 
 export default async function handler(
@@ -37,7 +36,7 @@ export default async function handler(
         return res.status(404).json({ message: 'User not found' })
       }
 
-      const updateData: Prisma.UserUpdateInput = {}
+      const updateData = { username: '', password: '' }
       if (username) updateData.username = username
       if (password) updateData.password = await bcrypt.hash(password, 10)
 
