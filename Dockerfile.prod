@@ -1,5 +1,5 @@
 # Use the latest Node.js LTS version as base
-FROM node:20-alpine
+FROM node:22-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
+
+RUN yarn global add dotenv-cli
 
 # Copy the entire source code
 COPY . .
@@ -17,5 +19,8 @@ RUN yarn build
 # Expose the production port (3003)
 EXPOSE 3003
 
+COPY .env.production .env.production
+
 # Start the Next.js app in production mode
-CMD ["yarn", "start"]
+CMD dotenv -e .env.production -- npx prisma migrate deploy && dotenv -e .env.production -- npx prisma generate && yarn start
+

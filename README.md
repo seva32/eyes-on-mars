@@ -106,3 +106,5 @@ npx kill-port 3003
 npx prisma studio
 yarn run prisma:migrate -- --name add_table_x
 ```
+
+In ubuntu server build the app to generate .next assets, then build and run with docker compose.
