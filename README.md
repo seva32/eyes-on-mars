@@ -108,3 +108,5 @@ yarn run prisma:migrate -- --name add_table_x
 ```
 
 In ubuntu server build the app to generate .next assets, then build and run with docker compose.
+
+Yarn may have issues running install in ubuntu vbox vs wsl, so remove yarn-lock and reinstall.
