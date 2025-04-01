@@ -41,7 +41,7 @@ export const ContactInfo: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <input
                 type="email"
                 value={user?.email}

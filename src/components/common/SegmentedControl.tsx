@@ -18,7 +18,7 @@ export const SegmentedControl: React.FC = () => {
   const buttonWidth = `${100 / items.length}%`
 
   return (
-    <section className="flex justify-center items-center w-screen h-screen bg-zinc-950">
+    <section className="flex justify-center items-center w-full bg-zinc-950">
       <div
         className="flex relative p-0.5 rounded-lg border bg-zinc-900 border-zinc-800"
         role="tablist"

@@ -31,7 +31,7 @@ export default function MarsExplorer() {
   }
 
   return (
-    <main className="flex overflow-hidden flex-col justify-center items-center w-screen bg-zinc-950 min-h-[screen] text-zinc-200">
+    <main className="flex overflow-hidden flex-col justify-center items-center w-full bg-zinc-950 text-zinc-200">
       <section className="flex relative flex-col items-center w-full max-w-[1200px]">
         <h1 className="relative mb-4 text-7xl font-black text-center max-sm:text-4xl">
           <span className="bg-[clip-text]">Eyes on Mars</span>
