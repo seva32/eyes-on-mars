@@ -17,7 +17,7 @@ export const ProfileInfo: React.FC = () => {
   return (
     <div className="space-y-2">
       {!editStates.name ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <h1 className="text-[24px] font-semibold">
             {profile?.name || 'User'}
           </h1>
@@ -40,7 +40,7 @@ export const ProfileInfo: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <input
             type="text"
             value={profile?.name}
@@ -64,7 +64,7 @@ export const ProfileInfo: React.FC = () => {
       )}
 
       {!editStates.username ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <p className="text-[16px] text-[#9CA3AF]">@{user?.username}</p>
           <button
             onClick={() => handleEdit('username')}
@@ -85,7 +85,7 @@ export const ProfileInfo: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <input
             type="text"
             value={user?.username}

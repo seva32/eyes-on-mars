@@ -11,3 +11,9 @@ body,
 #__next {
   font-family: 'Inter', sans-serif;
 }
+
+@media (max-width: 640px) {
+  .max-sm-hidden {
+    display: none !important;
+  }
+}

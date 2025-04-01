@@ -17,11 +17,11 @@ export const Header: React.FC = () => {
             Eyes on Mars
           </NavigationLink>
           {!session ? (
-            <div className="flex gap-8 items-center max-sm:hidden">
+            <div className="flex gap-8 items-center max-sm:hidden max-sm-hidden">
               <NavigationLink href="/about">About</NavigationLink>
             </div>
           ) : (
-            <div className="flex gap-8 items-center max-sm:hidden">
+            <div className="flex gap-8 items-center max-sm:hidden max-sm-hidden">
               <NavigationLink href="/user/photo-explorer">
                 Photo Explorer
               </NavigationLink>
@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
         </div>
         <div className="flex gap-4 items-center">
           {!session ? (
-            <div className="flex gap-4 items-center max-sm:hidden">
+            <div className="flex gap-4 items-center max-sm:hidden max-sm-hidden">
               <NavigationLink href="/auth/signin" buttonStyle>
                 Sign In
               </NavigationLink>
@@ -44,14 +44,14 @@ export const Header: React.FC = () => {
               </NavigationLink>
             </div>
           ) : (
-            <div className="max-sm:hidden">
+            <div className="max-sm:hidden max-sm-hidden">
               <NavigationLink href="/auth/signout" buttonStyle>
                 Sign Out
               </NavigationLink>
             </div>
           )}
           <button
-            className="flex justify-center items-center w-10 h-10 rounded-lg bg-zinc-900 sm:hidden"
+            className="flex justify-center items-center w-10 h-10 rounded-lg bg-zinc-900"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">

@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="mt-auto border bg-zinc-900 border-zinc-800">
       <div className="px-6 py-12 mx-auto max-w-[1400px]">
-        <div className="grid grid-cols-4 gap-8 max-sm:gap-12">
+        <div className="grid grid-cols-4 gap-8 max-sm:gap-12 max-sm:grid-cols-2">
           <section className="flex flex-col gap-4">
             <h3 className="text-xl font-bold text-zinc-200">Eyes on Mars</h3>
             <p className="text-sm text-gray-400">

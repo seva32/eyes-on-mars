@@ -1,13 +1,15 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { InputField } from './InputField'
 import { PasswordInput } from './PasswordInput'
 import { Divider } from './Divider'
 import { GoogleButton } from './GoogleButton'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function SignUpForm() {
+  const { status: sessionStatus } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +21,12 @@ export default function SignUpForm() {
     success: '',
   })
   const router = useRouter()
+
+  useEffect(() => {
+    if (sessionStatus === 'authenticated') {
+      router.push('/user/profile')
+    }
+  }, [sessionStatus, router])
 
   const handleChange = (e) => {
     if (status.error) {
