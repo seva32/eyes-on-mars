@@ -26,7 +26,16 @@ export default async function handler(
 
     try {
       const newUser = await prisma.user.create({
-        data: { username: username || email, email, password: hashedPassword },
+        data: {
+          username: username || email,
+          email,
+          password: hashedPassword,
+          profile: {
+            create: {
+              name: username || email.split('@')[0],
+            },
+          },
+        },
       })
 
       return res
