@@ -16,7 +16,7 @@ services:
       - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
     command: postgres -c hba_file=/etc/postgresql/pg_hba.conf
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'user_nemo']
+      test: bash -c "pg_isready -U user_nemo -d \"$POSTGRES_DB\""
       interval: 5s
       timeout: 5s
       retries: 5
