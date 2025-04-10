@@ -1,13 +1,24 @@
+# services:
+#   cypress:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.cypress
+#     read_only: true
+#     security_opt:
+#       - no-new-privileges
+#     healthcheck:
+#       test: ['CMD-SHELL', 'npx cypress verify || exit 1']
+#       interval: 30s
+#       retries: 3
+#       start_period: 10s
+
 services:
   cypress:
-    build:
-      context: .
-      dockerfile: Dockerfile.cypress
-    read_only: true
-    security_opt:
-      - no-new-privileges
-    healthcheck:
-      test: ['CMD-SHELL', 'npx cypress verify || exit 1']
-      interval: 30s
-      retries: 3
-      start_period: 10s
+    image: cypress/included:13.6.5
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
+    environment:
+      - CYPRESS_BASE_URL=http://localhost:3003
+      - DISPLAY= # explicitly unset DISPLAY to avoid Xvfb issues
+    command: npx cypress run --browser chrome --headless

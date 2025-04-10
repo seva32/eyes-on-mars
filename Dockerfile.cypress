@@ -1,18 +1,9 @@
-FROM cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
-
-RUN addgroup --system cypress && adduser --system --ingroup cypress cypress
-USER cypress
+FROM cypress/included:13.6.5
 
 WORKDIR /e2e
 
-COPY package.json yarn.lock ./
+COPY . .
 
-RUN yarn install --immutable && npx cypress install
+ENV DISPLAY=
 
-COPY cypress/ ./cypress/
-COPY cypress.config.js ./
-
-# (catches environment issues ASAP)
-RUN npx cypress verify
-
-CMD ["npx", "cypress", "run"]
+CMD ["npx", "cypress", "run", "--browser", "chrome", "--headless"]

@@ -3,7 +3,7 @@ import fs from 'fs'
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3003', // Default base URL
+    baseUrl: 'http://localhost:3003',
     supportFile: 'cypress/support/e2e.js',
     fixturesFolder: 'cypress/fixtures',
     screenshotsFolder: 'cypress/screenshots',
