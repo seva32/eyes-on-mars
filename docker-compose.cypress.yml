@@ -1,6 +1,8 @@
 services:
   cypress:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.cypress
     read_only: true
     security_opt:
       - no-new-privileges
