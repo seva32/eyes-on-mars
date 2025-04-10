@@ -1,0 +1,13 @@
+services:
+  cypress:
+    build:
+      context: .
+      dockerfile: Dockerfile.cypress
+    read_only: true
+    security_opt:
+      - no-new-privileges
+    healthcheck:
+      test: ['CMD-SHELL', 'npx cypress verify || exit 1']
+      interval: 30s
+      retries: 3
+      start_period: 10s
