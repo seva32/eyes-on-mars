@@ -12,6 +12,7 @@
     "prisma:generate": "dotenv -e .env.local -- npx prisma generate",
     "prisma:db:pull": "dotenv -e .env.local -- npx prisma db pull",
     "cypress": "docker-compose -f docker-compose.cypress.yml up --build --abort-on-container-exit",
+    "cypress:up": "docker-compose -f docker-compose.cypress.yml up",
     "cypress:win": "docker compose -f docker-compose.cypress.yml up --build --abort-on-container-exit"
   },
   "dependencies": {
