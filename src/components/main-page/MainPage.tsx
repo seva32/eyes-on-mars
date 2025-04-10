@@ -50,6 +50,7 @@ export default function MarsExplorer() {
           <button
             onClick={handleBegin}
             className="px-6 py-3 text-xl font-bold bg-red-500 rounded-lg transition-transform duration-300 ease-in-out hover:scale-98 focus:scale-98 cursor-pointer"
+            data-testid="begin-journey-button"
           >
             Begin Your Journey
           </button>

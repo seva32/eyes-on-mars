@@ -110,3 +110,17 @@ yarn run prisma:migrate -- --name add_table_x
 In ubuntu server build the app to generate .next assets, then build and run with docker compose.
 
 Yarn may have issues running install in ubuntu vbox vs wsl, so remove yarn-lock and reinstall.
+
+```ruby
+cy.task('getEnvVariable', 'CYPRESS_ENV').then((env) => {
+  cy.log(`Environment: ${env}`)
+})
+```
+
+Update docker compose in Ubuntu:
+
+```bash
+mkdir -p ~/.docker/cli-plugins
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+```
