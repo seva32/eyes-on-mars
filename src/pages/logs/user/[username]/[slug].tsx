@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import prisma from '../../../../lib/prisma' // adjust if needed
 import Link from 'next/link'
 import Image from 'next/image'
+import Layout from '../../../../components/layout/Layout'
 
 type Props = {
   username: string
@@ -73,37 +74,43 @@ export default function LogDetailPage({
   }
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <Layout>
       <Link href={`/logs/user/${username}`}>
         <span className="text-sm text-blue-500 hover:underline">
           &larr; Back to all logs
         </span>
       </Link>
 
-      <h1 className="text-3xl font-bold mt-4">{title}</h1>
+      <h1 className="text-3xl font-bold mt-4 text-white">{title}</h1>
       <p className="text-sm text-gray-500 mb-6">
         {new Date(createdAt).toLocaleDateString()}
       </p>
-      <button
-        onClick={handleDelete}
-        disabled={isDeleting}
-        className="text-red-500 hover:underline disabled:opacity-50"
-      >
-        {isDeleting ? 'Deleting...' : 'Delete'}
-      </button>
-      {isDeleting && (
+      <div className="flex justify-between items-center absolute top-0 right-0 mt-40 mr-10">
         <button
-          onClick={handleUndo}
-          className="text-blue-500 hover:underline ml-4"
+          onClick={handleDelete}
+          disabled={isDeleting}
+          className="text-red-500 hover:underline disabled:opacity-50"
         >
-          Undo
+          {isDeleting ? 'Deleting...' : 'Delete'}
         </button>
-      )}
+        {isDeleting && (
+          <button
+            onClick={handleUndo}
+            className="text-blue-500 hover:underline ml-4"
+          >
+            Undo
+          </button>
+        )}
+      </div>
 
-      <div className="whitespace-pre-line leading-relaxed">{content}</div>
+      <div className="text-white whitespace-pre-line leading-relaxed">
+        {content}
+      </div>
       {photos.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">Attached Photos</h2>
+          <h2 className="text-xl font-semibold mb-4 text-white">
+            Attached Photos
+          </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {photos.map((photo) => (
               <div key={photo.id} className="border rounded overflow-hidden">
@@ -122,7 +129,7 @@ export default function LogDetailPage({
           </div>
         </div>
       )}
-    </div>
+    </Layout>
   )
 }
 

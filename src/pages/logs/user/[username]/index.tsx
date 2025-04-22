@@ -2,6 +2,7 @@ import React from 'react'
 import { GetServerSideProps } from 'next'
 import prisma from '../../../../lib/prisma'
 import Link from 'next/link'
+import Layout from '../../../../components/layout/Layout'
 
 type Props = {
   username: string
@@ -15,9 +16,10 @@ type Props = {
 
 export default function UserLogsPage({ username, logs }: Props) {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        {username}&apos;s Mission Logs
+    <Layout>
+      <h1 className="text-2xl font-bold mb-4 text-white">
+        {username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()}
+        &apos;s Mission Logs
       </h1>
       {logs.length === 0 ? (
         <p>No logs yet.</p>
@@ -37,10 +39,10 @@ export default function UserLogsPage({ username, logs }: Props) {
           ))}
         </ul>
       )}
-      <Link href="/logs/new">
+      <Link href="/logs/new" className="mt-6 inline-block">
         <span className="text-blue-600 hover:underline">Create Log</span>
       </Link>
-    </div>
+    </Layout>
   )
 }
 
