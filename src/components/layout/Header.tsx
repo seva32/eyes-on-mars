@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
   const { data: session } = useSession()
+  const username = session?.user?.name
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border bg-zinc-900 border-zinc-800">
@@ -29,6 +30,11 @@ export const Header: React.FC = () => {
                 Saved Snaps
               </NavigationLink>
               <NavigationLink href="/user/profile">Profile</NavigationLink>
+              {username && (
+                <NavigationLink href={`/logs/user/${username}`}>
+                  Logs
+                </NavigationLink>
+              )}
               <NavigationLink href="/about">About</NavigationLink>
             </div>
           )}
